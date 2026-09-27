@@ -1,5 +1,17 @@
 from __future__ import annotations
 
+def doc_signature(manifest: dict) -> str:
+    """Machine-readable header for a regenerable doc: which scan produced it and from which
+    project state. A consumer (e.g. Lantern) compares `fingerprint` against a fresh manifest to
+    decide whether the doc is stale, instead of guessing from a file mtime. Never touched by hand:
+    a document a person has edited should have this line removed, which is itself a valid signal
+    ("no longer purely regenerable") for any consumer that checks for it.
+    """
+    return (
+        f"<!-- ases:doc fingerprint={manifest.get('project_fingerprint','')} "
+        f"ases_version={manifest.get('ases_version','')} -->\n"
+    )
+
 def _ev(obj):
     p = obj.get("provenance", {})
     ev = ", ".join(p.get("evidence", [])) or "none"

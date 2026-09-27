@@ -99,7 +99,7 @@ def build_semantic_model(project_name: str, inventory: dict, graph: FactGraph, r
     quality=semantic_quality(inventory,graph,behaviors,tests,trace,controls)
 
     model = {
-        "ases_version":"1.7.0",
+        "ases_version":"1.7.1",
         "project":{
             "name":project_name,
             "entry_mode":"BROWNFIELD-UNDOCUMENTED",

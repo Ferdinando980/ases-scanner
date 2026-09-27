@@ -1,5 +1,12 @@
 # ASES Changelog
 
+## 1.7.1
+- Regenerable docs (SYSTEM-OVERVIEW.md, RAD.md, SDD.md, ODD.md, TESTING.md) now carry an
+  `<!-- ases:doc fingerprint=... ases_version=... -->` signature so an external consumer (e.g.
+  Lantern) can tell whether a doc still matches the current project state, without guessing from a
+  file's mtime. Data files (TRACEABILITY.yaml, CONTROLS.yaml, QUALITY.md) stay unsigned.
+- 37 tests pass.
+
 ## 1.7.0
 - Added source-role classification before analysis: OWNED_SOURCE, TEST, GENERATED, VENDORED, TOOLING, DOCUMENTATION, BUILD_ARTIFACT.
 - Generated JaCoCo/Javadoc output, minified/vendor libraries and wrapper/tooling code no longer drive findings.
