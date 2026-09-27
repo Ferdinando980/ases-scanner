@@ -411,26 +411,52 @@ def _facade_finding(graph: FactGraph):
     by_id={n.id:n for n in graph.nodes}
     prod={n.id:n for n in graph.nodes if not n.metadata.get('is_test_code')}
     owner_of={n.id:n.metadata.get('owner') for n in graph.nodes if n.kind=='method'}
-    called=defaultdict(set); evidence=defaultdict(list)
+    called=defaultdict(set); sequences=defaultdict(lambda:defaultdict(list)); evidence=defaultdict(list)
+    # The Java scanner inserts these edges in source call order within each method.
     for e in graph.edges:
         if e.relation!='calls_dependency' or e.source not in owner_of or e.target not in prod: continue
         owner=owner_of[e.source]
         if owner not in prod or prod[e.target].kind not in {'service','repository','component','factory','configuration','interface'}: continue
         called[owner].add(e.target); evidence[owner].extend(e.evidence)
+        sequences[owner][e.source].append(e.target)
     sources=[s for s,targets in called.items() if len(targets)>=3]
     best=None
     for i,a in enumerate(sources):
         for b in sources[i+1:]:
             shared=called[a]&called[b]
-            if len(shared)>=3 and (best is None or len(shared)>len(best[2])):
-                best=(a,b,shared)
+            if len(shared)<3: continue
+            workflow=None
+            for method_a,calls_a in sequences[a].items():
+                ordered_a=tuple(target for target in calls_a if target in shared)
+                if len(ordered_a)<3: continue
+                for method_b,calls_b in sequences[b].items():
+                    ordered_b=tuple(target for target in calls_b if target in shared)
+                    if ordered_a==ordered_b:
+                        workflow=(method_a,method_b,ordered_a)
+                        break
+                if workflow: break
+            candidate=(a,b,shared,workflow)
+            score=(len(workflow[2]) if workflow else 0,len(shared))
+            best_score=(len(best[3][2]) if best and best[3] else 0,len(best[2]) if best else 0)
+            if best is None or score>best_score:
+                best=candidate
     if not best: return None
-    a,b,shared=best; names=', '.join(sorted(prod[x].name for x in shared)[:6])
-    return _finding('opportunity.facade_repeated_orchestration','OPPORTUNITY','medium',
-        f"Two production components ({prod[a].name}, {prod[b].name}) actively call the same {len(shared)} subsystem collaborators ({names}). A Facade may remove duplicated subsystem choreography if these call sequences represent the same workflow.",
-        evidence[a]+evidence[b],smell='repeated-multi-subsystem-calls',
-        guidance='Do not add a Facade for shared injected fields alone; require repeated active subsystem choreography or a stable boundary that callers need to share.',
-        signals={'positive':['same actively-called collaborator set used by multiple components',f'{len(shared)} shared called dependencies'],'negative':[]})
+    a,b,shared,workflow=best
+    if workflow:
+        method_a,method_b,ordered=workflow
+        names=' → '.join(prod[x].name for x in ordered)
+        return _finding('opportunity.facade_repeated_orchestration','OPPORTUNITY','medium',
+            f"Methods {by_id[method_a].name} and {by_id[method_b].name} call the same {len(ordered)} subsystem collaborators in the same order ({names}). This repeated orchestration may benefit from a Facade.",
+            evidence[a]+evidence[b],smell='repeated-multi-subsystem-calls',
+            guidance='Confirm the matching call sequences represent the same workflow before extracting a Facade; collaborator overlap alone is not sufficient.',
+            signals={'positive':['matching ordered collaborator sequence across production methods',f'{len(ordered)} shared called dependencies'],'negative':['business-workflow equivalence is not dynamically verified']},
+            assumptions=['Matching ordered calls are structural evidence, not proof of identical business intent.'])
+    names=', '.join(sorted(prod[x].name for x in shared)[:6])
+    return _finding('opportunity.facade_repeated_orchestration','HINT','low',
+        f"Two production components ({prod[a].name}, {prod[b].name}) actively call the same {len(shared)} subsystem collaborators ({names}), but a matching ordered call sequence was not established.",
+        evidence[a]+evidence[b],smell='shared-multi-subsystem-dependencies',
+        guidance='Treat shared collaborators as a lead only; consider a Facade when methods show repeated ordered orchestration of the same workflow.',
+        signals={'positive':['same actively-called collaborator set used by multiple components',f'{len(shared)} shared called dependencies'],'negative':['matching ordered workflow sequence not established']})
 
 def _meaningful_creations(names):
     return sorted({n for n in names if _meaningful_creation(n)})

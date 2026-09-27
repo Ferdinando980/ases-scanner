@@ -72,18 +72,18 @@ def test_adapter_proxy_and_decorator_are_evidence_gated(tmp_path):
     assert any(x['pattern']=='Adapter' for x in _hints(model))  # mapping_only lacks external boundary evidence
 
 
-def test_facade_requires_repeated_real_dependencies_not_receiver_count(tmp_path):
+def test_facade_opportunity_requires_matching_ordered_workflow(tmp_path):
     model=_model(tmp_path,'facade',{
         'A.java':'''@Service class A {}''',
         'B.java':'''@Service class B {}''',
         'C.java':'''@Service class C {}''',
-        'One.java':'''@Controller class One {
+        'One.java':'''@Service class One {
 private A a;
 private B b;
 private C c;
 public void run(){ a.go(); b.go(); c.go(); }
 }''',
-        'Two.java':'''@Controller class Two {
+        'Two.java':'''@Service class Two {
 private A a;
 private B b;
 private C c;
@@ -94,7 +94,39 @@ public void run(){ a.go(); b.go(); c.go(); }
     facades=[x for x in _opportunities(model) if x['pattern']=='Facade']
     assert len(facades)==1
     assert facades[0]['scope']=='project'
+    assert 'same order' in facades[0]['reason']
+    assert any('matching ordered collaborator sequence' in signal for signal in facades[0]['signals']['positive'])
     assert not any('dom.js' in e for x in facades for e in x['evidence'])
+
+
+def test_facade_shared_collaborators_without_workflow_overlap_are_hints(tmp_path):
+    model=_model(tmp_path,'facade-hint',{
+        'A.java':'''@Service class A {
+private X x;
+private Y y;
+private Z z;
+public void first(){ x.go(); }
+public void second(){ y.go(); }
+public void third(){ z.go(); }
+}''',
+        'B.java':'''@Service class B {
+private X x;
+private Y y;
+private Z z;
+public void load(){ z.go(); }
+public void update(){ x.go(); }
+public void remove(){ y.go(); }
+}''',
+        'X.java':'@Repository class X {}',
+        'Y.java':'@Repository class Y {}',
+        'Z.java':'@Repository class Z {}',
+    })
+    facades=[x for x in _opportunities(model) if x['pattern']=='Facade']
+    hints=[x for x in _hints(model) if x['pattern']=='Facade']
+    assert not facades
+    assert len(hints)==1
+    assert hints[0]['confidence']=='low'
+    assert 'matching ordered call sequence was not established' in hints[0]['reason']
 
 
 def test_architectural_patterns_are_observed_from_graph(tmp_path):
