@@ -1,0 +1,14 @@
+ASES_recap.txt
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+*.egg-info/
+dist/
+build/
+*.ases/

@@ -1,0 +1,144 @@
+controls:
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:38:0
+  name: validateUsername(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:38
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:52:1
+  name: validateSurname(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:52
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:66:2
+  name: validateName(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:66
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:80:3
+  name: validatePhoneNumber(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:80
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:101:4
+  name: validateEmail(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:101
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:116:5
+  name: validateDate(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:116
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:133:6
+  name: validatePassword(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:133
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:148:7
+  name: validatePasswordCheck(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:148
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:173:8
+  name: validateAll(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:173
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:239:9
+  name: validateAll(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js:239
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:119:0
+  name: validaTelefono(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:119
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:206:1
+  name: validaTelefono(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:206
+    assumptions: []
+  control_type: validation
+- id: control:validation:ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:266:2
+  name: validaTelefono(
+  kind: control
+  description: ''
+  provenance:
+    state: OBSERVED
+    confidence: high
+    evidence:
+    - ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:266
+    assumptions: []
+  control_type: validation

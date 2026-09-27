@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">ASES output contract</title>
+  <desc id="desc">An example architecture finding showing status, evidence, counter-evidence, confidence, location and guidance.</desc>
+  <rect width="1200" height="500" rx="28" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="74" y="65" fill="#0f172a" font-size="27" font-weight="700">One finding, with its reasoning attached</text>
+    <rect x="70" y="105" width="1060" height="325" rx="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="98" y="136" width="138" height="38" rx="19" fill="#dbeafe"/><text x="167" y="161" text-anchor="middle" fill="#1d4ed8" font-size="15" font-weight="700">INFERRED</text>
+    <text x="265" y="163" fill="#0f172a" font-size="23" font-weight="700">Layered architecture with one boundary deviation</text>
+    <g font-size="16">
+      <text x="104" y="222" fill="#475569" font-weight="700">Evidence</text><text x="275" y="222" fill="#0f172a">controllers call services; services call repositories</text>
+      <text x="104" y="266" fill="#475569" font-weight="700">Counter-evidence</text><text x="275" y="266" fill="#0f172a">one controller calls a repository directly</text>
+      <text x="104" y="310" fill="#475569" font-weight="700">Source role</text><text x="275" y="310" fill="#0f172a">OWNED_SOURCE</text>
+      <text x="610" y="310" fill="#475569" font-weight="700">Confidence</text><text x="740" y="310" fill="#0f172a">0.86 · strong</text>
+      <text x="104" y="354" fill="#475569" font-weight="700">Action</text><text x="275" y="354" fill="#0f172a">review the observed deviation; no speculative layer added</text>
+    </g>
+    <rect x="98" y="382" width="1004" height="1" fill="#e2e8f0"/>
+    <text x="104" y="410" fill="#64748b" font-size="14">Stable fingerprint keeps this finding comparable after line-number movement.</text>
+  </g>
+</svg>

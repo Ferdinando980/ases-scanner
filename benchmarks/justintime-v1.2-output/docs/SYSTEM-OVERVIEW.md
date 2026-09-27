@@ -1,0 +1,322 @@
+# Recovered System Overview — Progetto-JustInTime
+
+> Generated from repository evidence. It describes the current implementation and does not claim original stakeholder intent.
+
+## Provenance
+- ASES: 1.2.0
+- Entry mode: BROWNFIELD-UNDOCUMENTED
+
+## Technology inventory
+- Java: 51 source files
+- JavaScript: 13 source files
+- Build: Maven (`ProgettoIs JustInTime/pom.xml`)
+- Framework: Spring/Spring-like annotations (observed)
+
+## Actors
+- **External caller** — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:31
+
+## Observed components
+- **EndGameState** (component) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/EndGameState.java:16
+- **PauseState** (component) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/PauseState.java:11
+- **StartGameState** (component) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/StartGameState.java:9
+- **TurnState** (component) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/TurnState.java:16
+- **ClassificaService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/ClassificaService.java:17
+- **FeedbackService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/FeedbackService.java:11
+- **MazzoPescaService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/MazzoPescaService.java:10
+- **MazzoScartoService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/MazzoScartoService.java:8
+- **PartitaConfigService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/PartitaConfigService.java:24
+- **PartitaService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/PartitaService.java:26
+- **PlayerService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/PlayerService.java:11
+- **UtenzaPlayerService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaPlayerService.java:11
+- **UtenzaService** (service) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java:18
+- **JustInTimeApplicationTests** (class) — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/demo/JustInTimeApplicationTests.java:6
+- **FeedBackServiceTest** (class) — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java:19
+- **PartitaConfigServiceTest** (class) — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java:36
+- **UtenzaServiceTest** (class) — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:28
+- **SpringBootJspApplication** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/SpringBootJspApplication.java:9
+- **SessionUtil** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/SessionUtil.java:9
+- **FullPlayerDataDTO** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/FullPlayerDataDTO.java:5
+- **FullPlayerDataDTOPsw** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/FullPlayerDataDTOPsw.java:5
+- **LoginResponse** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/LoginResponse.java:3
+- **paeseUtenzaDTO** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/paeseUtenzaDTO.java:3
+- **PlayerRecord** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/PlayerRecord.java:4
+- **SinglePlayerDataDTO** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/SinglePlayerDataDTO.java:4
+- **Carta** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Carta.java:6
+- **Mazzo** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Mazzo.java:6
+- **MazzoFactory** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoFactory.java:3
+- **MazzoPesca** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoPesca.java:11
+- **MazzoScarto** (class) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoScarto.java:7
+- **AsyncConfig** (configuration) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/config/AsyncConfig.java:6
+- **FeedbackRepository** (repository) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/repository/FeedbackRepository.java:9
+- **PlayerRepository** (repository) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/repository/PlayerRepository.java:14
+- **UtenzaRepository** (repository) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/repository/UtenzaRepository.java:13
+- **AuthController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:16
+- **ClassificaController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:15
+- **FeedbackController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java:18
+- **PagesController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:11
+- **PartitaConfigController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:25
+- **PartitaController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:21
+- **PlayerController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java:18
+- **UtenzaController** (controller) — OBSERVED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:22
+
+## Observed behaviors
+- **POST //registrazione**
+  - actor: External caller
+  - flow: `route:POST://registrazione:com.justInTime.controller.AuthController#registraUtente → method:com.justInTime.controller.AuthController#registraUtente:31 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#registerUser → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:31`
+- **POST //login**
+  - actor: External caller
+  - flow: `route:POST://login:com.justInTime.controller.AuthController#login → method:com.justInTime.controller.AuthController#login:55 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#login → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:55`
+- **GET //logout**
+  - actor: External caller
+  - flow: `route:GET://logout:com.justInTime.controller.AuthController#logout → method:com.justInTime.controller.AuthController#logout:82`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:82`
+- **POST //resetIsPageOpen**
+  - actor: External caller
+  - flow: `route:POST://resetIsPageOpen:com.justInTime.controller.AuthController#resetIsPageOpen → method:com.justInTime.controller.AuthController#resetIsPageOpen:91`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:91`
+- **GET /classifica/locale**
+  - actor: External caller
+  - flow: `route:GET:/classifica/locale:com.justInTime.controller.ClassificaController#getClassificaLocale → method:com.justInTime.controller.ClassificaController#getClassificaLocale:26 → type:com.justInTime.service.ClassificaService → method-name:ClassificaService#getClassificaLocale → type:com.justInTime.repository.PlayerRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:26`
+- **GET /classifica**
+  - actor: External caller
+  - flow: `route:GET:/classifica:com.justInTime.controller.ClassificaController#getClassifica → method:com.justInTime.controller.ClassificaController#getClassifica:33 → type:com.justInTime.service.ClassificaService → method-name:ClassificaService#getClassifica → type:com.justInTime.repository.PlayerRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:33`
+- **GET /classifica/singlePlayerData**
+  - actor: External caller
+  - flow: `route:GET:/classifica/singlePlayerData:com.justInTime.controller.ClassificaController#getSinglePlayerRecord → method:com.justInTime.controller.ClassificaController#getSinglePlayerRecord:38 → type:com.justInTime.service.ClassificaService → method-name:ClassificaService#getSinglePlayer → type:com.justInTime.repository.PlayerRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:38`
+- **GET /feedback**
+  - actor: External caller
+  - flow: `route:GET:/feedback:com.justInTime.controller.FeedbackController#getAllFeedback → method:com.justInTime.controller.FeedbackController#getAllFeedback:33 → type:com.justInTime.service.FeedbackService → method-name:FeedbackService#getAllFeedback → type:com.justInTime.repository.FeedbackRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java:33`
+- **POST /feedback**
+  - actor: External caller
+  - flow: `route:POST:/feedback:com.justInTime.controller.FeedbackController#creaFeedback → method:com.justInTime.controller.FeedbackController#creaFeedback:45 → type:com.justInTime.service.FeedbackService → method-name:FeedbackService#creaFeedback → type:com.justInTime.repository.FeedbackRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java:45`
+- **GET /**
+  - actor: External caller
+  - flow: `route:GET:/:com.justInTime.controller.PagesController#viewHome → method:com.justInTime.controller.PagesController#viewHome:14`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:14`
+- **GET /login**
+  - actor: External caller
+  - flow: `route:GET:/login:com.justInTime.controller.PagesController#login → method:com.justInTime.controller.PagesController#login:22`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:22`
+- **GET /registrazione**
+  - actor: External caller
+  - flow: `route:GET:/registrazione:com.justInTime.controller.PagesController#register → method:com.justInTime.controller.PagesController#register:30`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:30`
+- **GET /achievements**
+  - actor: External caller
+  - flow: `route:GET:/achievements:com.justInTime.controller.PagesController#achievements → method:com.justInTime.controller.PagesController#achievements:40`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:40`
+- **GET /prepartita**
+  - actor: External caller
+  - flow: `route:GET:/prepartita:com.justInTime.controller.PagesController#prepartita → method:com.justInTime.controller.PagesController#prepartita:48`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:48`
+- **GET /rules**
+  - actor: External caller
+  - flow: `route:GET:/rules:com.justInTime.controller.PagesController#rules → method:com.justInTime.controller.PagesController#rules:71`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:71`
+- **GET /classificaGlobale**
+  - actor: External caller
+  - flow: `route:GET:/classificaGlobale:com.justInTime.controller.PagesController#classificaGlobale → method:com.justInTime.controller.PagesController#classificaGlobale:76`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:76`
+- **GET /classificaLocale**
+  - actor: External caller
+  - flow: `route:GET:/classificaLocale:com.justInTime.controller.PagesController#classificaLocale → method:com.justInTime.controller.PagesController#classificaLocale:84`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:84`
+- **GET /consultazioneProfilo**
+  - actor: External caller
+  - flow: `route:GET:/consultazioneProfilo:com.justInTime.controller.PagesController#consultazioneProfilo → method:com.justInTime.controller.PagesController#consultazioneProfilo:92`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:92`
+- **GET /userHomepage**
+  - actor: External caller
+  - flow: `route:GET:/userHomepage:com.justInTime.controller.PagesController#userHomepage → method:com.justInTime.controller.PagesController#userHomepage:100`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:100`
+- **GET /modifyaccount**
+  - actor: External caller
+  - flow: `route:GET:/modifyaccount:com.justInTime.controller.PagesController#modifyaccount → method:com.justInTime.controller.PagesController#modifyaccount:108`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:108`
+- **GET /endmatch**
+  - actor: External caller
+  - flow: `route:GET:/endmatch:com.justInTime.controller.PagesController#endmatch → method:com.justInTime.controller.PagesController#endmatch:116`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:116`
+- **GET /match**
+  - actor: External caller
+  - flow: `route:GET:/match:com.justInTime.controller.PagesController#match → method:com.justInTime.controller.PagesController#match:124`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:124`
+- **GET /startmatch**
+  - actor: External caller
+  - flow: `route:GET:/startmatch:com.justInTime.controller.PagesController#startmatch → method:com.justInTime.controller.PagesController#startmatch:132`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:132`
+- **GET /feedbacks**
+  - actor: External caller
+  - flow: `route:GET:/feedbacks:com.justInTime.controller.PagesController#feedback → method:com.justInTime.controller.PagesController#feedback:140`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:140`
+- **POST /api/game-config/add-player-login**
+  - actor: External caller
+  - flow: `route:POST:/api/game-config/add-player-login:com.justInTime.controller.PartitaConfigController#addPlayerLogin → method:com.justInTime.controller.PartitaConfigController#addPlayerLogin:38 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#aggiungiGiocatoreConfig → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.service.PartitaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:38`
+- **GET /api/game-config/getSessionUser**
+  - actor: External caller
+  - flow: `route:GET:/api/game-config/getSessionUser:com.justInTime.controller.PartitaConfigController#getSessionUser → method:com.justInTime.controller.PartitaConfigController#getSessionUser:54`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:54`
+- **GET /api/game-config/path**
+  - actor: External caller
+  - flow: `route:GET:/api/game-config/path:com.justInTime.controller.PartitaConfigController#getMethodName → method:com.justInTime.controller.PartitaConfigController#getMethodName:71`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:71`
+- **DELETE /api/game-config/remove-player**
+  - actor: External caller
+  - flow: `route:DELETE:/api/game-config/remove-player:com.justInTime.controller.PartitaConfigController#removePlayer → method:com.justInTime.controller.PartitaConfigController#removePlayer:76 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#rimuoviGiocatore → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.service.PartitaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:76`
+- **GET /api/game-config/players**
+  - actor: External caller
+  - flow: `route:GET:/api/game-config/players:com.justInTime.controller.PartitaConfigController#getConfiguredPlayers → method:com.justInTime.controller.PartitaConfigController#getConfiguredPlayers:86 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#getGiocatoriInConfigurazione → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.service.PartitaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:86`
+- **POST /api/game-config/create-and-start**
+  - actor: External caller
+  - flow: `route:POST:/api/game-config/create-and-start:com.justInTime.controller.PartitaConfigController#createAndStartGame → method:com.justInTime.controller.PartitaConfigController#createAndStartGame:110 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#creaPartita → type:com.justInTime.service.PartitaService → method-name:PartitaService#iniziaPartitaAsync → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.model.GameState → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:110`
+- **GET /api/game-config/match-status**
+  - actor: External caller
+  - flow: `route:GET:/api/game-config/match-status:com.justInTime.controller.PartitaConfigController#getPartitaStatus → method:com.justInTime.controller.PartitaConfigController#getPartitaStatus:137 → type:com.justInTime.service.PartitaService → method-name:PartitaService#isFinished → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:137`
+- **POST /api/game-config/play-again**
+  - actor: External caller
+  - flow: `route:POST:/api/game-config/play-again:com.justInTime.controller.PartitaConfigController#playAgain → method:com.justInTime.controller.PartitaConfigController#playAgain:151 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#creaNuovaPartitaDaPartitaPrecedente → type:com.justInTime.service.PartitaService → method-name:PartitaService#iniziaPartita → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.model.GameState → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:151`
+- **POST /game/play-card/{cartaIndex}**
+  - actor: External caller
+  - flow: `route:POST:/game/play-card/{cartaIndex}:com.justInTime.controller.PartitaController#playCard → method:com.justInTime.controller.PartitaController#playCard:38 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#giocaCarta → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:38`
+- **POST /game/pesca-carta**
+  - actor: External caller
+  - flow: `route:POST:/game/pesca-carta:com.justInTime.controller.PartitaController#pescaCarta → method:com.justInTime.controller.PartitaController#pescaCarta:61 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#pescaCarta → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:61`
+- **POST /game/termina-partita**
+  - actor: External caller
+  - flow: `route:POST:/game/termina-partita:com.justInTime.controller.PartitaController#terminaPartita → method:com.justInTime.controller.PartitaController#terminaPartita:94 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#terminaPartita → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:94`
+- **POST /game/playerMano**
+  - actor: External caller
+  - flow: `route:POST:/game/playerMano:com.justInTime.controller.PartitaController#getGiocatoreCorrenteMano → method:com.justInTime.controller.PartitaController#getGiocatoreCorrenteMano:107 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#getGiocatoreCorrenteMano → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:107`
+- **POST /game/nextPlayerReady**
+  - actor: External caller
+  - flow: `route:POST:/game/nextPlayerReady:com.justInTime.controller.PartitaController#nextPlayerReady → method:com.justInTime.controller.PartitaController#nextPlayerReady:129 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:129`
+- **POST /game/PlayerReady**
+  - actor: External caller
+  - flow: `route:POST:/game/PlayerReady:com.justInTime.controller.PartitaController#PlayerReady → method:com.justInTime.controller.PartitaController#PlayerReady:145 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#playerReady → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:145`
+- **GET /game/timer**
+  - actor: External caller
+  - flow: `route:GET:/game/timer:com.justInTime.controller.PartitaController#getTimerPlayer → method:com.justInTime.controller.PartitaController#getTimerPlayer:168 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#getCurrentPlayerTimer → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:168`
+- **GET /game/nameIndexPlayer**
+  - actor: External caller
+  - flow: `route:GET:/game/nameIndexPlayer:com.justInTime.controller.PartitaController#getNameINdexPlayer → method:com.justInTime.controller.PartitaController#getNameINdexPlayer:189 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:189`
+- **GET /game/last-discarded-card**
+  - actor: External caller
+  - flow: `route:GET:/game/last-discarded-card:com.justInTime.controller.PartitaController#lastDiscardedCard → method:com.justInTime.controller.PartitaController#lastDiscardedCard:215 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → method-name:PartitaService#getLastCardScarto → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:215`
+- **POST /game/nextPlayer**
+  - actor: External caller
+  - flow: `route:POST:/game/nextPlayer:com.justInTime.controller.PartitaController#goNextPlayer → method:com.justInTime.controller.PartitaController#goNextPlayer:245 → type:com.justInTime.service.PartitaService → method-name:PartitaService#getPartita → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:245`
+- **POST /game/nextPlayer2**
+  - actor: External caller
+  - flow: `route:POST:/game/nextPlayer2:com.justInTime.controller.PartitaController#goNextPlayer2 → method:com.justInTime.controller.PartitaController#goNextPlayer2:282 → type:com.justInTime.service.PartitaConfigService → method-name:PartitaConfigService#getGiocatoriInConfigurazione → type:com.justInTime.repository.PartitaRepository → type:com.justInTime.service.UtenzaService → type:com.justInTime.service.PlayerService → type:com.justInTime.service.PartitaService → type:com.justInTime.model.GameState → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.service.MazzoScartoService → type:com.justInTime.service.MazzoPescaService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:282`
+- **GET /giocatore/{playerId}**
+  - actor: External caller
+  - flow: `route:GET:/giocatore/{playerId}:com.justInTime.controller.PlayerController#trovaGiocatore → method:com.justInTime.controller.PlayerController#trovaGiocatore:36 → type:com.justInTime.service.PlayerService → method-name:PlayerService#trovaGiocatore → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.repository.UtenzaRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java:36`
+- **GET /giocatore/tutti**
+  - actor: External caller
+  - flow: `route:GET:/giocatore/tutti:com.justInTime.controller.PlayerController#trovaTuttiGiocatori → method:com.justInTime.controller.PlayerController#trovaTuttiGiocatori:49 → type:com.justInTime.service.PlayerService → method-name:PlayerService#trovaTuttiGiocatori → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService → type:com.justInTime.repository.UtenzaRepository`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java:49`
+- **POST /utenze**
+  - actor: External caller
+  - flow: `route:POST:/utenze:com.justInTime.controller.UtenzaController#creaUtenza → method:com.justInTime.controller.UtenzaController#creaUtenza:32 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#creaUtente → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:32`
+- **GET /utenze/trovaUtenza**
+  - actor: External caller
+  - flow: `route:GET:/utenze/trovaUtenza:com.justInTime.controller.UtenzaController#trovaUtenza → method:com.justInTime.controller.UtenzaController#trovaUtenza:40 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#trovaUtenteNoPsw → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:40`
+- **GET /utenze/trovaUtenzaPsw**
+  - actor: External caller
+  - flow: `route:GET:/utenze/trovaUtenzaPsw:com.justInTime.controller.UtenzaController#trovaUtenzaPsw → method:com.justInTime.controller.UtenzaController#trovaUtenzaPsw:46 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#trovaUtenteConPsw → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:46`
+- **GET /utenze/trovaUtenzaPaese**
+  - actor: External caller
+  - flow: `route:GET:/utenze/trovaUtenzaPaese:com.justInTime.controller.UtenzaController#trovaUtenzaPaese → method:com.justInTime.controller.UtenzaController#trovaUtenzaPaese:55 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#trovaUtentePaese → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:55`
+- **GET /utenze/trovaTutteUtenze**
+  - actor: External caller
+  - flow: `route:GET:/utenze/trovaTutteUtenze:com.justInTime.controller.UtenzaController#trovaTutteUtenze → method:com.justInTime.controller.UtenzaController#trovaTutteUtenze:60 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#trovaTutteUtenze → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:60`
+- **PUT /utenze/modificautenza**
+  - actor: External caller
+  - flow: `route:PUT:/utenze/modificautenza:com.justInTime.controller.UtenzaController#aggiornaUtenza → method:com.justInTime.controller.UtenzaController#aggiornaUtenza:66 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#aggiornaUtente → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:66`
+- **DELETE /utenze/rimuoviUtenza**
+  - actor: External caller
+  - flow: `route:DELETE:/utenze/rimuoviUtenza:com.justInTime.controller.UtenzaController#eliminaUtenza → method:com.justInTime.controller.UtenzaController#eliminaUtenza:82 → type:com.justInTime.service.UtenzaService → method-name:UtenzaService#eliminaUtente → type:com.justInTime.repository.UtenzaRepository → type:com.justInTime.service.PlayerService → type:com.justInTime.repository.PlayerRepository → type:com.justInTime.service.UtenzaPlayerService`
+  - evidence: `ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:82`
+
+## Data / assets
+- Achievements — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Achievements.java:14
+- Feedback — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Feedback.java:12
+- Partita — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Partita.java:20
+- Player — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Player.java:20
+- Utente — INFERRED / medium / ProgettoIs JustInTime/src/main/java/com/justInTime/model/Utente.java:9
+
+## Trust boundaries
+- External caller → application HTTP boundary — INFERRED / high / ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:31, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:55, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:82, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java:91, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:26, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:33, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java:38, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java:33, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java:45, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:100, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:108, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:116, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:124, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:132, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:14, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:140, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:22, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:30, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:40, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:48, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:71, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:76, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:84, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java:92, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:110, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:137, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:151, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:38, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:54, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:71, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:76, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java:86, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:107, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:129, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:145, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:168, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:189, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:215, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:245, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:282, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:38, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:61, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java:94, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java:36, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java:49, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:32, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:40, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:46, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:55, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:60, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:66, ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java:82
+
+## Tests
+- LU1_stelle_1_descrizione_troppo_lunga — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java:29
+- LU2_stelle_1_descrizione_vuota — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java:38
+- LU3_stelle_5_descrizione_valida — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java:47
+- LU3_stelle_null_descrizione_valida — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java:67
+- AggiungiGiocatoreConfig_Success — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java:59
+- AggiungiGiocatoreConfig_UtenteNonEsiste — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java:91
+- AggiungiGiocatoreConfig_PasswordNonCorrisponde — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java:114
+- AggiungiGiocatoreConfig_MaxGiocatoriRaggiunto — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java:165
+- LUS1_username_troppo_lungo_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:71
+- FUS1_username_errato_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:81
+- FE1_email_non_corretta_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:91
+- LP1_password_troppo_corta_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:101
+- FP1_password_non_corretta_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:111
+- MCP1_conferma_password_non_corretta_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:121
+- FNO1_nome_non_corretto_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:131
+- FCO1_cognome_non_corretto_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:141
+- FNT1_numero_di_telefono_non_corretto_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:151
+- SP1_inserimento_paese_richiesto_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:161
+- PR1_data_nascita_vuota_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:171
+- ES1_username_altro_account_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:182
+- ESE1_email_altro_account_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:199
+- PR2_corretto_registra — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:217
+- LUS1_username_troppo_lungo_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:227
+- FUS1_username_errato_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:250
+- FE1_email_non_corretta_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:269
+- LP1_password_troppo_corta_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:288
+- FP1_password_non_corretta_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:307
+- MCP1_conferma_password_non_corretta_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:326
+- FNO1_nome_non_corretto_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:345
+- FCO1_cognome_non_corretto_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:364
+- FNT1_numero_di_telefono_non_corretto_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:383
+- SP1_inserimento_paese_richiesto_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:402
+- PR1_data_nascita_vuota_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:421
+- ES1_username_altro_account_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:441
+- ESE1_email_altro_account_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:473
+- PR2_corretto_modifica — OBSERVED / high / ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java:503
+
+## Assumptions / unknowns
+- Static route recovery alone cannot determine whether callers are authenticated or authorized. [UNKNOWN]
+- Original stakeholder intent is not recoverable from code alone. [UNKNOWN]

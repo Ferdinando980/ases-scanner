@@ -1,0 +1,213 @@
+root: C:\Users\grego\AppData\Local\Temp\ases-clone-yugbeau7\Progetto-JustInTime
+file_count: 132
+languages:
+- name: Java
+  files: 51
+- name: JavaScript
+  files: 13
+build_tools:
+- path: ProgettoIs JustInTime/pom.xml
+  tool: Maven
+documentation:
+- ProgettoIs JustInTime/HELP.md
+tests:
+- ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java
+- ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java
+- ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java
+- ProgettoIs JustInTime/src/test/java/com/justInTime/demo/JustInTimeApplicationTests.java
+configs:
+- ProgettoIs JustInTime/src/main/resources/application.properties
+migrations: []
+source_manifest:
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/FullPlayerDataDTO.java
+  sha256: 49b4bc614150e7a95d9200cc1d678793bb9654f200e93165c7feeff1d5a46fcd
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/FullPlayerDataDTOPsw.java
+  sha256: 336155b388c7402d590806d3b4b0abc95b45b401c0aac28c9a1c3bf1680db595
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/LoginResponse.java
+  sha256: a70b4d48583b3e777063320b8370cd346088202a22a9b5c2fc4087a70c3babdf
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/PlayerRecord.java
+  sha256: 7896d8b119d45fa896c106c91c3d1403f0ed31fb3b964c305f534890d2877fd1
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/SinglePlayerDataDTO.java
+  sha256: 7131ec6efc931df0c04a828f96630d48fec98b2ece21db478d6e3da69ab1a888
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/DTO/paeseUtenzaDTO.java
+  sha256: 02f4389a282dae00311d03aee6f0196776cad91c2b5c2e1e6c1e2bee18427063
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/SpringBootJspApplication.java
+  sha256: be8be917e00bda4d9d50d5b8064caf0fbcbeed20eb0622cacf61c75a44de8378
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/config/AsyncConfig.java
+  sha256: 9c5d115582319bdc7022d32827a113708ac42cc92de31ff5c441d6af3456a3c1
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/AuthController.java
+  sha256: efa9d0fa972260bc7c95ca682f185b4221a2782d3659545503c5bbd15eff6f67
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/ClassificaController.java
+  sha256: 4649284499b1bd125ba1cef93d52ffc6f7d7520b1c0b13b3ba9a20ff54e53586
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/FeedbackController.java
+  sha256: 6729b49c2e5785cb0797f03489b6a9f32225c417a71d15ecc7983b69eab12eba
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PagesController.java
+  sha256: 35a8b67200f3ab7d10c16bd7a34a761f5e89a90ee8edc994a09250c6e91bff24
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaConfigController.java
+  sha256: cda48fa6a74803d3e81275cb4ca344b8c1250fc549c8ac2fca41b09fd2649cbe
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PartitaController.java
+  sha256: 3b08ed16b7b0581a984e64a20529db633b41ad8074f310ea47b3910f8681f150
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/PlayerController.java
+  sha256: e698e98814e85dc72dd2feda83e0f2f6fef85797c4b11717410abcc1e029c9a3
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/SessionUtil.java
+  sha256: 56221818030f38a698536322e2f4590f7d3f3f248ef406955bde0b447ccd9862
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/controller/UtenzaController.java
+  sha256: e550592d9f9e6470c21a4baae940abb824c34866929fb2c78f66763ea067ca23
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Achievements.java
+  sha256: afc926ac840ff2c51a59a7c8a682d9b652d7a76dd471c5d4f9d4ae45652ec18e
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Carta.java
+  sha256: 8d3b0db04bd6089ffce8c2b9f0d02f385aa90c90767352c4e94eb6c3c1036029
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/EndGameState.java
+  sha256: 7cbeeed2d3e0bbe7c65612862a13bce6ddc3848d9ba433d9a13781e48fdb8507
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Feedback.java
+  sha256: a363231c8917d73271b4f19dc7ba83d26103ec8c611ebb0ca05f51bfa5eb441b
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/GameState.java
+  sha256: 2eeb837af5f9ac57cd88d373b379c5affcf20e01feba21b2f11288cb03967963
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Mazzo.java
+  sha256: f5cd465c81b4d78f5490af69537991a811db49719c3e306175a188e8448adb49
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoFactory.java
+  sha256: 9ea45fdfd1eeeca3e87094438d58595c217db2ab0108be5b6cd1797b435b180f
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoPesca.java
+  sha256: b5bbbda3cc0aa89172264d4edfdfe1ae822972f001a6bb73b1d158148a46313e
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/MazzoScarto.java
+  sha256: 4d11f9a95bcb4c286bcd6d7b01074b4f8a70f432b4d9576350de3c5f685ee89d
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Partita.java
+  sha256: bbf2c6cc13267cbc48ab7a9b33de019857a39d779c638f115910e6bf6f762062
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/PauseState.java
+  sha256: cf50a1ca4c56e50bb99b44d82a782231995726577db4382950aa47280561ccc7
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Player.java
+  sha256: 88b5ea125c809e6712ad6b214a94daa393e91121f6639bb50342498969553869
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/StartGameState.java
+  sha256: 47e82b06171e84224cb3a6a46e41494fba92e0ed1cec51839085faa410686196
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/TurnState.java
+  sha256: 379a48c7f9da57d40eaa91049616ec821da86b31785364f1d719d348c5bc08e3
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/Utente.java
+  sha256: 009ef87545d9560b2a778346f1ad4120c6f766bac0aa609e1d26107bd59630b4
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/abstractPlayer.java
+  sha256: edd294f65da9f31c712b230828ddbf2bb9e04d1d9b34bcbb1f53166b1f406172
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/model/abstractUtente.java
+  sha256: 14ccb30d4c2d1e24a432194b6b6e1d752cd0464cd8f0a9116807b064fdda55a5
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/repository/FeedbackRepository.java
+  sha256: 4c1fbdca27e2ec717824c2652d9342fdda02fc1925f1d20b554acb3f5157a6cb
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/repository/PartitaRepository.java
+  sha256: dc5487f46955e6a252f72dd84fd7cd27a1c4b1d5c27ce6014f812be4b7f8fcfb
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/repository/PlayerRepository.java
+  sha256: dfd43a466937f94a586f7bf87cd4fcf6bace6dac8635a47eb8683b8f61f9940c
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/repository/UtenzaRepository.java
+  sha256: b059ce6c4277367b488eeae632ddaad534b095242e234966e98e7e4a14a533e2
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/ClassificaService.java
+  sha256: 2c4a3600f370b547bb1ff0d8bd4c8e497baa980137befd059a887ddd24962554
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/FeedbackService.java
+  sha256: c0a8e610b4c32acf5ff24b0daf70776b99d9477445d0d30a0a36112d18eaf9d1
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/MazzoPescaService.java
+  sha256: beb6c6f74fe6084dd30e2af542562bedc07190042205e769c2b9e04a185fb44d
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/MazzoScartoService.java
+  sha256: e22388909820fb45fc1aeef65a84ea12428740b0c9d4710db892df856a146a0a
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/PartitaConfigService.java
+  sha256: c99bb49f3acb57fc65329cac93ce67bcc2cff9d2d4d31ce0e373c88cb6cfaf09
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/PartitaService.java
+  sha256: 3156947a94442a212f9b3064b0a182e681fe56fbb31c8a3568ee28c715ade71f
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/PlayerService.java
+  sha256: be2866e3786cc815051f31471c73cb87e2248a1d4895d10662b48ba2f8eafca8
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaPlayerService.java
+  sha256: 4adb934be80561e48f41e0be19f75b8693fa8d97c7caa7d0df3130824b60aafb
+  language: Java
+- path: ProgettoIs JustInTime/src/main/java/com/justInTime/service/UtenzaService.java
+  sha256: 5baa28e8952be1b71a4836807229381f7efcc6f962a10a2b66f707543f42a7b7
+  language: Java
+- path: ProgettoIs JustInTime/src/main/resources/static/script/FormValidation.js
+  sha256: 5cd576716150293f0525c8f25d2307452c4fc61650679f7cac58c158d4f95dba
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/achievement.js
+  sha256: 5dbb1cece7d60bd473dfcab82d15ab9544bbfb85833f14aff596ccf32a1662a5
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/classificaGlobale.js
+  sha256: 58f701b5688b8c88151faea7c3f096f6de0fc1f9c398bd72fc2dc5fb7a9f2242
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/classificaLocale.js
+  sha256: 68af9f2175af05d794bc062fecfc98632638601be9692c5528e1101eede2c18f
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/consultazioneprofilo.js
+  sha256: 828d4c6cb34f3b2a09afdcdd7aa003b8d756a120f61492c3706b91bea8cf85da
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/endMatch.js
+  sha256: 8ae8a134c4b0a3ea05fac51f0aa5badbd15098ccebee22a3a4283f2beee46f14
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/feedback.js
+  sha256: bbce23c982e1d511e8ff0293a81af80c69f85b9a88011f037ca225fc396f9b89
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/fetchPlayers.js
+  sha256: 69261e801565e494150f45a6a80671bf8815dd6c5d98dfab99fa386f96afffb3
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/match.js
+  sha256: 6ab17c618b3ffe7fc995b90fd75fb1755662d22aca611b1bce5112f11eb338ed
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/modifyaccount.js
+  sha256: 3628424d5be3a9140306c53877724940947f6485f3def0d7183c3ba74dde2e3b
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/prepartita.js
+  sha256: 45cd38046cf609539e629169d41422088194897bf03fcf7715f6e03a5e0f83e6
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/startmatch.js
+  sha256: f36ee52dd5e8505b563818facca527d2f623456414b1e70b88435c2365575b81
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/main/resources/static/script/userHomepage.js
+  sha256: 583fb0269fcbf22274e3df6617ccb7c458266e360963a68333cfc9b683b330f3
+  language: JavaScript
+- path: ProgettoIs JustInTime/src/test/java/com/justInTime/Service/FeedBackServiceTest.java
+  sha256: f851f63581a6a1fa36ea01ac904af60f490f37f917035548c4b10a5063169da7
+  language: Java
+- path: ProgettoIs JustInTime/src/test/java/com/justInTime/Service/PartitaConfigServiceTest.java
+  sha256: 4edeb485eff8606a0f6fbf0a1e96ca8e8496338131107c72c9c3d95422b5865a
+  language: Java
+- path: ProgettoIs JustInTime/src/test/java/com/justInTime/Service/UtenzaServiceTest.java
+  sha256: 7ac93e86d8935229305122c9948931bca28d6a80616d8b55a8d3988d19fa610c
+  language: Java
+- path: ProgettoIs JustInTime/src/test/java/com/justInTime/demo/JustInTimeApplicationTests.java
+  sha256: 21a833594bdcc03c199535d8357d60e267b112687b837cbd2b193cdb00a2ef89
+  language: Java

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">ASES evidence pipeline</title>
+  <desc id="desc">Source classification leads to facts, a semantic graph, claims, counter-evidence and explainable findings.</desc>
+  <rect width="1200" height="520" rx="28" fill="#0b1220"/>
+  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="58" fill="#f8fafc" font-size="28" font-weight="700">Evidence before inference</text>
+    <text x="600" y="91" fill="#94a3b8" font-size="17">Each step keeps the evidence needed by the next one.</text>
+    <g font-size="17" font-weight="650">
+      <g fill="#102a43" stroke="#38bdf8" stroke-width="2"><rect x="40" y="170" width="180" height="92" rx="16"/><text x="130" y="207" fill="#e0f2fe">1 · Classify</text><text x="130" y="234" fill="#bae6fd" font-size="14">owned · test · generated</text></g>
+      <g fill="#14261d" stroke="#4ade80" stroke-width="2"><rect x="270" y="170" width="180" height="92" rx="16"/><text x="360" y="207" fill="#dcfce7">2 · Observe</text><text x="360" y="234" fill="#bbf7d0" font-size="14">symbols · routes · tests</text></g>
+      <g fill="#251d3a" stroke="#a78bfa" stroke-width="2"><rect x="500" y="170" width="180" height="92" rx="16"/><text x="590" y="207" fill="#ede9fe">3 · Connect</text><text x="590" y="234" fill="#ddd6fe" font-size="14">semantic + dependency graph</text></g>
+      <g fill="#352314" stroke="#f59e0b" stroke-width="2"><rect x="730" y="170" width="180" height="92" rx="16"/><text x="820" y="207" fill="#fef3c7">4 · Challenge</text><text x="820" y="234" fill="#fde68a" font-size="14">counter-evidence · assumptions</text></g>
+      <g fill="#351925" stroke="#fb7185" stroke-width="2"><rect x="960" y="170" width="200" height="92" rx="16"/><text x="1060" y="207" fill="#ffe4e6">5 · Explain</text><text x="1060" y="234" fill="#fecdd3" font-size="14">status · confidence · guidance</text></g>
+    </g>
+    <g stroke="#64748b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M220 216h38"/><path d="M246 206l12 10-12 10"/>
+      <path d="M450 216h38"/><path d="M476 206l12 10-12 10"/>
+      <path d="M680 216h38"/><path d="M706 206l12 10-12 10"/>
+      <path d="M910 216h38"/><path d="M936 206l12 10-12 10"/>
+    </g>
+    <rect x="150" y="350" width="900" height="92" rx="18" fill="#111c30" stroke="#334155" stroke-width="2"/>
+    <text x="600" y="387" fill="#f8fafc" font-size="20" font-weight="700">Tool-neutral output</text>
+    <text x="600" y="418" fill="#94a3b8" font-size="16">semantic model · fact graph · recovered docs · scanner findings · baseline diff</text>
+  </g>
+</svg>

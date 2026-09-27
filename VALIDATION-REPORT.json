@@ -1,0 +1,17 @@
+{
+  "version": "1.7.0",
+  "status": "PASS",
+  "tests": {"passed": 34, "failed": 0},
+  "selfcheck": "PASS",
+  "schemas": {
+    "semantic-model": "PASS",
+    "scanner-findings/1.3": "PASS",
+    "consumer-context/1.3": "PASS",
+    "finding-diff/1.0": "PASS"
+  },
+  "notes": [
+    "Source-role hygiene regression tests cover generated JaCoCo/Javadoc, vendored minified JavaScript, and tooling wrappers.",
+    "Frontend and cross-boundary regression tests share the same claim/finding contract as backend analysis.",
+    "BiblioNet is the intended next external benchmark scan."
+  ]
+}
