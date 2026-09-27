@@ -7,9 +7,11 @@ from .selfcheck import selfcheck
 from .export import export_json
 from .repo_source import resolve_source
 from .diffing import load_findings, diff_findings
+from . import __version__
 
 def build_parser():
     p = argparse.ArgumentParser(prog="ases", description="ASES software-engineering and reverse-engineering toolkit")
+    p.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     sub = p.add_subparsers(dest="command", required=True)
 
     scan = sub.add_parser("scan", help="Recover a semantic baseline from a local path or Git repository URL")
