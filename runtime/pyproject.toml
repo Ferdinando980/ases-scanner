@@ -1,6 +1,6 @@
 [project]
 name = "ases"
-version = "1.7.1"
+version = "1.7.2"
 description = "ASES reverse-engineering MVP"
 requires-python = ">=3.10"
 dependencies = ["PyYAML>=6.0"]

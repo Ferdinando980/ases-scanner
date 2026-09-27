@@ -1,5 +1,11 @@
 # ASES Changelog
 
+## 1.7.2
+- Added `ases --version`: the CLI had no version flag at all, so any consumer trying to detect
+  the installed version (e.g. Lantern's tool-update check) got nothing.
+- Fixed `runtime/pyproject.toml`'s own version, which had not followed the 1.7.1 bump.
+- 37 tests pass.
+
 ## 1.7.1
 - Regenerable docs (SYSTEM-OVERVIEW.md, RAD.md, SDD.md, ODD.md, TESTING.md) now carry an
   `<!-- ases:doc fingerprint=... ases_version=... -->` signature so an external consumer (e.g.
