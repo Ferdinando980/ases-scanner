@@ -1,13 +1,31 @@
-# ASES Consumer Contract v1.4
+# ASES Consumer Contract v1.5
 
 ASES remains standalone. Lantern and other tools consume generic output; ASES core contains no Lantern-specific logic.
 
 ## Primary files
 
 - `scanner-findings.json` (`ases-scanner-findings/1.3`) — normalized scanner feed.
-- `consumer-context.json` (`ases-consumer-context/1.4`) — full recovered semantic context.
+- `consumer-context.json` (`ases-consumer-context/1.5`) — full recovered semantic context.
 - `semantic-model.yaml` — canonical ASES model.
 - `findings-diff.json` (`ases-finding-diff/1.0`) — optional baseline delta.
+
+## v1.5 changes (additive over v1.4)
+
+`external_systems` is now real, not the always-empty placeholder v1.4 deliberately left out of
+the contract. `recover_external_systems` (`runtime/ases/recovery/semantic.py`) matches each
+node's raw import strings (`node.metadata["imports"]`, already collected by the Java/
+TypeScript/Python scanners) against a **fixed allowlist** of well-known third-party API/service
+clients (OpenAI, Anthropic, Stripe, AWS SDK, Supabase, Twilio, SendGrid, Firebase). Every entry
+is `provenance.state: "INFERRED"`, never `"OBSERVED"`: an import proves the client/SDK is
+present in the code, not that it is actually called, which endpoint it hits, or what data it
+sends — `provenance.assumptions` says this explicitly on every entry.
+
+Generic database drivers (`pg`, `mongodb`, JDBC drivers, ...) are **not** in the allowlist on
+purpose: they would overlap with `data_stores` (recovered separately from `entity` nodes),
+which already covers "the app's own data", a different concept from "a third-party system".
+
+This is a starting allowlist, not exhaustive — a client library not on the list simply produces
+no `external_systems` entry for it; that is "not detected", never "confirmed absent".
 
 ## v1.4 changes (additive over v1.3)
 
@@ -27,12 +45,6 @@ them and keep working unmodified; nothing from v1.3 was removed or reshaped.
   `description`, `provenance`). This says an entity exists and how it was found — it is not a
   personal-data or sensitivity classification; a consumer must not infer GDPR/PII status from
   presence alone.
-
-`external_systems` is intentionally **not** part of the v1.4 contract: the field exists in the
-internal semantic model but is always an empty placeholder today (no recovery pass populates
-it yet). It will be added to a future consumer-context version once real detection exists, not
-before — exporting an always-empty field would let a consumer wrongly treat "no external
-systems observed" as a real finding instead of "not implemented yet".
 
 ## Scanner feed
 

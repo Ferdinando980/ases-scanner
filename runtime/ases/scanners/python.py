@@ -115,9 +115,11 @@ def scan_python(root: Path) -> FactGraph:
 
     # imports + calls
     name_to_node = {}
+    nodes_by_id = {}
     for n in graph.nodes:
         if n.kind in {"class","entity","function","method","module"}:
             name_to_node.setdefault(n.name, []).append(n.id)
+        nodes_by_id[n.id] = n
 
     for rel, tree in parsed.items():
         mid = module_nodes[rel]
@@ -130,6 +132,11 @@ def scan_python(root: Path) -> FactGraph:
                 mod = node.module or ""
                 for alias in node.names:
                     imports[alias.asname or alias.name] = f"{mod}.{alias.name}".strip(".")
+        # Full dotted import targets, including third-party ones that resolve to nothing in
+        # this repo (the `imports` dict below only uses these to wire in-repo edges and drops
+        # the rest) — kept here, same shape as the Java/TS scanners' node.metadata["imports"],
+        # so a later pass (external systems) can allowlist-match without a new parser.
+        nodes_by_id[mid].metadata["imports"] = sorted(set(imports.values()))
         for local, full in imports.items():
             simple = full.split(".")[-1]
             for target in name_to_node.get(simple, []):

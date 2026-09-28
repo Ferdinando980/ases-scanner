@@ -9,10 +9,11 @@ def test_export(tmp_path):
     scan_project(fixture, out)
     target = tmp_path/"consumer.json"
     data = export_json(out, target)
-    assert data["schema"] == "ases-consumer-context/1.4"
+    assert data["schema"] == "ases-consumer-context/1.5"
     assert target.exists()
     assert "behaviors" in data and "controls" in data
     assert "data_stores" in data
+    assert "external_systems" in data
     assert data["ases_version"]
     assert data["generated_at"]
 

@@ -120,7 +120,7 @@ def build_semantic_model(project_name: str, inventory: dict, graph: FactGraph, r
         "interfaces":interfaces,
         "data_stores":data_stores,
         "frontend":frontend,
-        "external_systems":[],
+        "external_systems":recover_external_systems(graph),
         "assets":assets,
         "trust_boundaries":trust,
         "controls":controls,
@@ -259,6 +259,47 @@ def recover_trust_boundaries(graph):
             "kind":"data_boundary",
             "description":"Repository/entity evidence implies a logical persistence boundary; physical deployment separation is unknown.",
             "provenance":{"state":"INFERRED","confidence":"medium","evidence":ev,"assumptions":["Logical boundary does not imply a separate host or trust zone."]}
+        })
+    return out
+
+# Fixed allowlist of well-known third-party API/service clients, matched as a case-insensitive
+# substring against each node's raw import strings (see scanners/{java,typescript,python}.py
+# node.metadata["imports"]). Deliberately excludes generic DB drivers (pg, mongodb, JDBC, ...):
+# those would overlap with `data_stores` (recovered separately, from `entity` nodes) and mean
+# something different — "the app's own database" is not a third party in the sense this list is
+# for. Conservative on purpose: an import proves the client/SDK is present in the code, nothing
+# about whether it's actually called, which endpoint it hits, or what data it sends.
+EXTERNAL_SYSTEM_PROVIDERS = [
+    ("OpenAI API", ("openai",)),
+    ("Anthropic API", ("anthropic",)),
+    ("Stripe", ("stripe",)),
+    ("AWS SDK", ("aws-sdk", "boto3", "software.amazon.awssdk", "com.amazonaws")),
+    ("Supabase", ("supabase",)),
+    ("Twilio", ("twilio",)),
+    ("SendGrid", ("sendgrid",)),
+    ("Firebase", ("firebase",)),
+]
+
+def recover_external_systems(graph):
+    matches={}
+    for n in graph.nodes:
+        for imp in n.metadata.get("imports") or []:
+            low=str(imp).lower()
+            for provider,tokens in EXTERNAL_SYSTEM_PROVIDERS:
+                if any(t in low for t in tokens):
+                    ev=matches.setdefault(provider,set())
+                    ev.update(n.provenance.evidence or ([n.path] if n.path else []))
+    out=[]
+    for provider,ev in sorted(matches.items()):
+        out.append({
+            "id":f"external-system:{provider.lower().replace(' ','-')}",
+            "name":provider,
+            "kind":"third_party_api",
+            "description":f"A known {provider} client/SDK import was observed in the code.",
+            "provenance":{
+                "state":"INFERRED","confidence":"medium","evidence":sorted(ev),
+                "assumptions":["Endpoint, contract terms, and data sent are not inferred — only that the client/SDK is imported."]
+            }
         })
     return out
 
