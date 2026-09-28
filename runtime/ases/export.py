@@ -1,4 +1,5 @@
 from __future__ import annotations
+from datetime import datetime, timezone
 from pathlib import Path
 import yaml, json
 
@@ -7,14 +8,23 @@ def load_model(path: Path) -> dict:
         path = path / "semantic-model.yaml"
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
-def generic_context(model: dict) -> dict:
+def generic_context(model: dict, manifest: dict | None = None) -> dict:
+    # v1.4 is additive over v1.3: every 1.3 key keeps its old shape, nothing removed or
+    # renamed. A consumer that only knows 1.3 can keep reading this and ignore the new keys.
+    # `manifest` is optional because `ases export` can run standalone on a semantic-model.yaml
+    # with no manifest.json alongside it (see cli.py); project_fingerprint is then omitted
+    # rather than guessed.
     return {
-        "schema":"ases-consumer-context/1.3",
+        "schema":"ases-consumer-context/1.4",
+        "ases_version":model.get("ases_version"),
+        "generated_at":datetime.now(timezone.utc).isoformat(),
+        "project_fingerprint":(manifest or {}).get("project_fingerprint"),
         "project":model.get("project",{}),
         "actors":model.get("actors",[]),
         "behaviors":model.get("behaviors",[]),
         "components":model.get("components",[]),
         "interfaces":model.get("interfaces",[]),
+        "data_stores":model.get("data_stores",[]),
         "assets":model.get("assets",[]),
         "frontend":model.get("frontend",{}),
         "trust_boundaries":model.get("trust_boundaries",[]),
@@ -40,7 +50,7 @@ def generic_context(model: dict) -> dict:
         "unknowns":model.get("unknowns",[]),
     }
 
-def export_json(model_path: Path, out: Path):
-    data = generic_context(load_model(model_path))
+def export_json(model_path: Path, out: Path, manifest: dict | None = None):
+    data = generic_context(load_model(model_path), manifest)
     out.write_text(json.dumps(data, indent=2), encoding="utf-8")
     return data

@@ -68,7 +68,7 @@ def scan_project(root: Path, out: Path | None = None, source_uri: str | None = N
         out / "semantic-quality.json": json.dumps(model.get("semantic_quality", {}), indent=2),
         out / "manifest.json": json.dumps(manifest, indent=2),
         out / "validation.json": json.dumps(validation, indent=2),
-        out / "consumer-context.json": json.dumps(generic_context(model), indent=2),
+        out / "consumer-context.json": json.dumps(generic_context(model, manifest), indent=2),
         out / "scanner-findings.json": json.dumps(scanner_findings(model), indent=2),
         # Signed (doc_signature): a consumer can tell these five are fully regenerated from the
         # current project state, and compare the embedded fingerprint against a fresh manifest.json

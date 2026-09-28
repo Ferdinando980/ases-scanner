@@ -2,7 +2,7 @@
 name = "ases"
 version = "1.7.2"
 description = "ASES reverse-engineering MVP"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["PyYAML>=6.0"]
 
 [project.scripts]

@@ -2,6 +2,7 @@ from __future__ import annotations
 from collections import defaultdict
 from pathlib import Path
 import re
+from .. import __version__ as ASES_VERSION
 from ..model import FactGraph
 from .traceability import semantic_trace_links, technical_relation_counts
 from ..scanners.filesystem import iter_owned_files
@@ -99,7 +100,7 @@ def build_semantic_model(project_name: str, inventory: dict, graph: FactGraph, r
     quality=semantic_quality(inventory,graph,behaviors,tests,trace,controls)
 
     model = {
-        "ases_version":"1.7.2",
+        "ases_version":ASES_VERSION,
         "project":{
             "name":project_name,
             "entry_mode":"BROWNFIELD-UNDOCUMENTED",

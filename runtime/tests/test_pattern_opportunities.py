@@ -152,7 +152,7 @@ def test_scanner_feed_separates_hints_from_actionable_findings(tmp_path):
     out=tmp_path/'scanner-output-out'
     consumer=json.loads((out/'consumer-context.json').read_text())
     scanner=json.loads((out/'scanner-findings.json').read_text())
-    assert consumer['schema']=='ases-consumer-context/1.3'
+    assert consumer['schema']=='ases-consumer-context/1.4'
     assert scanner['schema']=='ases-scanner-findings/1.3'
     assert not any(x['pattern']=='Strategy' for x in scanner['findings'])
     assert any(x['pattern']=='Strategy' for x in scanner['hints'])
