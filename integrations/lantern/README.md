@@ -1,37 +1,40 @@
-# Optional Lantern Adapter
+# Reference Consumer Adapter
 
-ASES does not depend on Lantern.
+ASES does not depend on Lantern, or on any other consumer.
 
-Lantern can consume the generic ASES consumer context and map it into its own security-analysis model.
+**What this actually is today**: `adapter.py` is a tested reference implementation showing how
+to read `consumer-context.json` (currently schema `ases-consumer-context/1.5`, see
+`../CONSUMER-CONTRACT.md`) into a smaller, task-shaped view, in Python. It is **not** what the
+real Lantern integration uses — Lantern's Node.js code
+(`engine/probes/ases.mjs` in the Lantern repo) reads `consumer-context.json`'s fields directly
+and does not go through this reshaping. This file is useful as a starting point for a
+*different* Python-side consumer, or as a worked example of the field names and the
+tolerant-on-an-unknown-schema pattern (`source_schema_supported`) a real integration should use.
 
-Recommended flow:
+It is kept accurate by `runtime/tests/test_lantern_adapter.py`, which runs it against a real
+ASES scan output, not a hand-written fixture — if the consumer-context contract changes shape,
+that test fails instead of this file silently going stale.
+
+Recommended flow for building a new consumer on top of it:
 
 ```text
 repository
   ↓
 ASES
   ↓
-ases-consumer-context.json
+consumer-context.json (ases-consumer-context/1.5)
   ↓
-Lantern adapter
+your adapter (start from adapter.adapt() here)
   ↓
 security hypotheses / scanner correlation / verification
 ```
 
-Useful ASES fields for Lantern include:
-- actors
-- behaviors
-- entry points
-- components
-- assets
-- trust boundaries
-- observed controls
-- assumptions
-- tests
-- trace links
-- conflicts / unknowns
+Fields currently reshaped by `adapt()`: `project`, `behaviors`, `trust_boundaries`, `assets`,
+`data_stores`, `external_systems`, `controls`, `sessions`, `assumptions`, `trace_links`,
+`conflicts`, `unknowns`, plus the source's own `schema`/`ases_version`/`generated_at` so a
+consumer can reason about freshness without re-deriving it.
 
-Lantern should preserve ASES provenance and keep separate:
+A consumer should preserve ASES provenance and keep separate:
 `observed fact → inference → security hypothesis → verified finding`.
 
-The adapter is optional and external to the ASES core.
+This adapter is optional and external to the ASES core.
