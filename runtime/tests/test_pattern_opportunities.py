@@ -72,6 +72,18 @@ def test_adapter_proxy_and_decorator_are_evidence_gated(tmp_path):
     assert any(x['pattern']=='Adapter' for x in _hints(model))  # mapping_only lacks external boundary evidence
 
 
+def test_native_http_client_concerns_are_proxy_hints(tmp_path):
+    model=_model(tmp_path,'native-client',{
+        'frontend/src/user.service.ts':'''import { HttpClient } from '@angular/common/http';
+class UserService {
+  private http: HttpClient;
+  load() { this.http.get('/user'); this.http.post('/login', {}); retry(); cache(); authToken(); }
+}''',
+    })
+    assert not any(x['pattern']=='Proxy' for x in _opportunities(model))
+    assert any(x['pattern']=='Proxy' for x in _hints(model))
+
+
 def test_facade_opportunity_requires_matching_ordered_workflow(tmp_path):
     model=_model(tmp_path,'facade',{
         'A.java':'''@Service class A {}''',
@@ -143,6 +155,18 @@ private AppRepository appRepository;
     })
     patterns={x['pattern'] for x in model['architecture_patterns']}
     assert {'Layered Architecture','Repository','MVC'} <= patterns
+
+
+def test_repository_interfaces_complete_layered_dependencies(tmp_path):
+    model=_model(tmp_path,'repository-interfaces',{
+        'src/main/java/demo/web/OwnerController.java': '@Controller class OwnerController {\nprivate ClinicService clinicService;\n}',
+        'src/main/java/demo/service/ClinicService.java': 'interface ClinicService {}',
+        'src/main/java/demo/service/ClinicServiceImpl.java': '@Service class ClinicServiceImpl implements ClinicService {\nprivate OwnerRepository ownerRepository;\n}',
+        'src/main/java/demo/repository/OwnerRepository.java': 'interface OwnerRepository {}',
+        'src/main/java/demo/repository/jdbc/JdbcOwnerRepository.java': '@Repository class JdbcOwnerRepository implements OwnerRepository {}',
+    })
+    patterns={x['pattern'] for x in model['architecture_patterns']}
+    assert {'Layered Architecture','Repository'} <= patterns
 
 
 def test_scanner_feed_separates_hints_from_actionable_findings(tmp_path):

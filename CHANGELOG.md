@@ -1,5 +1,11 @@
 # ASES Changelog
 
+## 1.8.0
+- Added bounded `ases scan-site` observation of public HTML pages with robots rules, same-origin crawl limits, forms, script references, and qualified framework hints.
+- Kept published-site evidence in the existing consumer/scanner contracts while marking source-level dimensions `NOT_OBSERVED`.
+- Corrected Angular source classification, component/template/service and route-declaration detection, and false Express routes from frontend tests.
+- Downgraded Proxy suggestions around native `HttpClient` to hints.
+
 ## 1.7.2
 - Added `ases --version`: the CLI had no version flag at all, so any consumer trying to detect
   the installed version (e.g. Lantern's tool-update check) got nothing.

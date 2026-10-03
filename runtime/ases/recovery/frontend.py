@@ -9,7 +9,8 @@ def recover_frontend_findings(graph: FactGraph) -> list[dict]:
     by_id={n.id:n for n in graph.nodes}
     frontend=[n for n in graph.nodes if n.metadata.get('scope')=='frontend' or n.kind.startswith('frontend_')]
     components=[n for n in frontend if n.kind=='frontend_component']
-    templates=[n for n in frontend if n.kind=='frontend_template']
+    templates=[n for n in frontend if n.kind=='frontend_template' and n.metadata.get('framework')!='Angular']
+    angular_templates=[n for n in frontend if n.kind=='frontend_template' and n.metadata.get('framework')=='Angular']
     services=[n for n in frontend if n.kind=='frontend_service']
     stores=[n for n in frontend if n.kind=='frontend_store']
     calls=[n for n in frontend if n.kind=='frontend_api_call' and not n.metadata.get('external')]
@@ -27,6 +28,12 @@ def recover_frontend_findings(graph: FactGraph) -> list[dict]:
             f'{len(templates)} owned frontend templates were observed' + (f" ({', '.join(frameworks)})." if frameworks else '.'),
             [ev for n in templates[:8] for ev in n.provenance.evidence],
             guidance='Generated documentation HTML and vendored assets are excluded from this count.'))
+
+    if angular_templates:
+        out.append(_finding('frontend.angular_component_templates','OBSERVED','high','FRONTEND_ARCHITECTURE','Angular Component Templates',
+            f'{len(angular_templates)} Angular component template(s) were observed as frontend source.',
+            [ev for n in angular_templates[:8] for ev in n.provenance.evidence],
+            guidance='These are client component templates, not server-rendered pages.'))
 
     if services:
         used={e.target for e in graph.edges if e.relation=='depends_on' and e.target in {n.id for n in services}}

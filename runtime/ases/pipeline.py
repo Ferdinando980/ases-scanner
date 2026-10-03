@@ -10,7 +10,7 @@ from .scanners.frontend import scan_frontend
 from .recovery.controls import recover_controls
 from .recovery.traceability import enrich_traceability
 from .recovery.semantic import build_semantic_model
-from .renderers.markdown import system_overview, recovered_rad, recovered_sdd, recovered_odd, testing_baseline, quality_report, doc_signature
+from .renderers.markdown import system_overview, recovered_rad, recovered_sdd, recovered_odd, testing_baseline, quality_report, doc_signature, decision_summary
 from .validation import validate_model
 from .manifest import build_manifest
 from .export import generic_context
@@ -29,7 +29,8 @@ def clean_output(path: Path) -> bool:
     shutil.rmtree(path)
     return True
 
-def scan_project(root: Path, out: Path | None = None, source_uri: str | None = None) -> dict:
+def scan_project(root: Path, out: Path | None = None, source_uri: str | None = None,
+                 site_observations: dict | None = None) -> dict:
     root = root.resolve()
     out = (out or root / ".ases").resolve()
     if out.exists() and (out.name == ".ases" or out.name.endswith(".ases") or (out / OUTPUT_MARKER).exists()):
@@ -40,14 +41,18 @@ def scan_project(root: Path, out: Path | None = None, source_uri: str | None = N
 
     inventory = scan_filesystem(root)
     graph = FactGraph()
-    for scanner in (scan_java, scan_typescript, scan_python, scan_frontend):
-        graph.merge(scanner(root))
-    recover_controls(root, graph)
-    enrich_traceability(graph)
+    if site_observations is None:
+        for scanner in (scan_java, scan_typescript, scan_python, scan_frontend):
+            graph.merge(scanner(root))
+        recover_controls(root, graph)
+        enrich_traceability(graph)
 
-    model = build_semantic_model(root.name, inventory, graph, root)
+    model = build_semantic_model(root.name, inventory, graph, root if site_observations is None else None)
     if source_uri:
         model["project"]["source_uri"] = source_uri
+    if site_observations is not None:
+        from .site_source import enrich_site_model
+        enrich_site_model(model, site_observations)
     graph_dict = graph.to_dict()
 
     # Schema path is resolved relative to installed package layout when available.
@@ -74,6 +79,7 @@ def scan_project(root: Path, out: Path | None = None, source_uri: str | None = N
         # current project state, and compare the embedded fingerprint against a fresh manifest.json
         # to decide if they are stale, instead of guessing from a file's mtime.
         docs / "SYSTEM-OVERVIEW.md": sig + system_overview(model, inventory),
+        docs / "SUMMARY.md": sig + decision_summary(model),
         docs / "RAD.md": sig + recovered_rad(model),
         docs / "SDD.md": sig + recovered_sdd(model),
         docs / "ODD.md": sig + recovered_odd(model, graph_dict),
@@ -82,6 +88,16 @@ def scan_project(root: Path, out: Path | None = None, source_uri: str | None = N
         docs / "CONTROLS.yaml": dump_yaml({"controls": model.get("controls", [])}),
         docs / "QUALITY.md": quality_report(model),
     }
+    if site_observations is not None:
+        outputs = {path: content for path, content in outputs.items() if path.parent != docs}
+        outputs[out / "site-observations.json"] = json.dumps(site_observations, indent=2)
+        lines = ["# Published frontend observation", "", f"Source: {site_observations['source_uri']}", "",
+                 f"Sampled pages: {len(site_observations['pages'])}", "", "## Pages", ""]
+        lines.extend(f"- [{page['title'] or page['url']}]({page['url']}) — {len(page['forms'])} forms, {len(page['scripts'])} script URLs"
+                     for page in site_observations["pages"])
+        lines += ["", "## Limits", ""]
+        lines.extend(f"- {limit}" for limit in site_observations["limits"])
+        outputs[docs / "SITE-OVERVIEW.md"] = sig + "\n".join(lines) + "\n"
     for path, content in outputs.items():
         path.write_text(content, encoding="utf-8")
 

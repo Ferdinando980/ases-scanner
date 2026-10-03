@@ -12,6 +12,51 @@ def doc_signature(manifest: dict) -> str:
         f"ases_version={manifest.get('ases_version','')} -->\n"
     )
 
+
+def decision_summary(model: dict) -> str:
+    """A short reading guide; observations remain separate from review decisions."""
+    project = model.get("project", {})
+    quality = model.get("semantic_quality", {})
+    claims = model.get("claims", [])
+    review = [c for c in claims if c.get("status") in {"CONTRADICTED", "OPPORTUNITY"}]
+    coverage = quality.get("analysis_coverage", {})
+    lines = [
+        f"# Evidence summary — {project.get('name', 'project')}", "",
+        "> Generated from available evidence. This is a review aid, not an approved design or security verdict.", "",
+        "## What was analyzed",
+        f"- Entry mode: {project.get('entry_mode', 'UNKNOWN')}",
+    ]
+    for name, item in coverage.items():
+        lines.append(f"- {name}: {item.get('status', 'UNKNOWN')} — {item.get('basis', '')}")
+    lines += ["", "## Observed structure"]
+    for finding in [*model.get("architecture_patterns", []), *model.get("frontend_findings", [])]:
+        if finding.get("status") == "OBSERVED":
+            lines.append(f"- {finding.get('pattern')}: {finding.get('reason')} [confidence: {finding.get('confidence')}]" )
+    if lines[-1] == "## Observed structure":
+        lines.append("- No supported architecture observation in this scan.")
+    lines += ["", "## Observed entry-to-boundary paths"]
+    paths = model.get("sensitive_paths", [])
+    for path in paths[:10]:
+        destination = path.get("destination", {})
+        lines.append(f"- {path.get('entry_point')} → {destination.get('id')} ({destination.get('kind')}); "
+                     f"entry controls observed: {len(path.get('controls_observed_at_entry', []))}")
+        lines.append(f"  - Evidence: {', '.join(path.get('evidence', [])[:3])}")
+    if len(paths) > 10:
+        lines.append(f"- {len(paths) - 10} further paths are available in the semantic model.")
+    if not paths:
+        lines.append("- No complete path recovered; this does not establish that no data flow exists.")
+    lines += ["", "## Requires human review"]
+    for claim in review:
+        evidence = ", ".join(claim.get("evidence", [])[:3])
+        lines.append(f"- {claim.get('subject', claim.get('rule_id', 'Claim'))}: {claim.get('statement', '')} [{claim.get('status')}]" )
+        if evidence:
+            lines.append(f"  - Evidence: {evidence}")
+    if not review:
+        lines.append("- No contradicted claim or opportunity surfaced; this does not establish absence of issues.")
+    lines += ["", "## Reading limits", "- A valid output checks model consistency, not runtime behavior or security.",
+              "- Unknown and not-observed dimensions must not be treated as negative findings."]
+    return "\n".join(lines) + "\n"
+
 def _ev(obj):
     p = obj.get("provenance", {})
     ev = ", ".join(p.get("evidence", [])) or "none"
@@ -46,6 +91,14 @@ def system_overview(model: dict, inventory: dict) -> str:
     lines += ["", "## Observed components"]
     for c in model.get("components", []):
         lines.append(f"- **{c['name']}** ({c['kind']}) — {_ev(c)}")
+    frontend = model.get("frontend", {})
+    if any(frontend.values()):
+        lines += ["", "## Observed frontend"]
+        for label, key in (("Components", "components"), ("Templates", "templates"),
+                           ("Services", "services"), ("Stores", "stores"),
+                           ("Routes", "routes"), ("API calls", "api_calls")):
+            if frontend.get(key):
+                lines.append(f"- {label}: {len(frontend[key])} observed")
 
     lines += ["", "## Observed behaviors"]
     if model.get("behaviors"):
@@ -56,7 +109,7 @@ def system_overview(model: dict, inventory: dict) -> str:
             lines.append(f"  - flow: `{flow}`")
             lines.append(f"  - evidence: `{', '.join(b['provenance']['evidence'])}`")
     else:
-        lines.append("- No externally meaningful behavior recovered yet.")
+        lines.append("- No externally meaningful backend behavior recovered from static evidence.")
 
     lines += ["", "## Data / assets"]
     for a in model.get("assets", []):
@@ -120,6 +173,20 @@ def recovered_sdd(model: dict) -> str:
         lines.append(f"### {kind.title()}")
         for c in items:
             lines.append(f"- {c['name']} — {_ev(c)}")
+    frontend = model.get("frontend", {})
+    if any(frontend.values()):
+        lines += ["", "## Observed frontend structure"]
+        for label, key in (("Components", "components"), ("Templates", "templates"),
+                           ("Services", "services"), ("Stores", "stores"), ("Routes", "routes")):
+            items = frontend.get(key, [])
+            if items:
+                lines.append(f"- {label}: {len(items)} observed")
+        lines += ["", "### Frontend architecture and conformance"]
+        for finding in model.get("frontend_findings", []):
+            lines.append(f"- **{finding['pattern']}** — {finding['status']} / {finding['confidence']}: {finding['reason']}")
+            lines.append(f"  - Evidence: {', '.join(finding.get('evidence', [])) or 'not available'}")
+        if not model.get("frontend_findings"):
+            lines.append("- No frontend architecture finding supported by current static evidence.")
     lines += ["", "## Persistence / data"]
     for d in model.get("data_stores", []):
         lines.append(f"- {d['name']} — {_ev(d)}")
@@ -151,7 +218,7 @@ def recovered_odd(model: dict, graph: dict) -> str:
         lines.append(f"- Kind: {c['kind']}")
         lines.append(f"- Provenance: {_ev(c)}")
         lines.append("")
-    lines += ["## Pattern analysis"]
+    lines += ["", "## Backend and code-level pattern analysis"]
     patterns = model.get("pattern_findings", [])
     visible = [p for p in patterns if p.get("status") != "HINT"]
     if visible:
@@ -163,7 +230,12 @@ def recovered_odd(model: dict, graph: dict) -> str:
             if p.get('guidance'):
                 lines.append(f"  - Guardrail: {p['guidance']}")
     else:
-        lines.append("- No evidence-backed pattern observation or opportunity recovered.")
+        lines.append("- No evidence-backed backend or code-level pattern observation or opportunity recovered.")
+    if model.get("frontend_findings"):
+        lines += ["", "## Frontend architecture and conformance"]
+        for finding in model["frontend_findings"]:
+            lines.append(f"- **{finding['pattern']}** — {finding['status']} / {finding['confidence']}: {finding['reason']}")
+            lines.append(f"  - Evidence: {', '.join(finding.get('evidence', [])) or 'not available'}")
     hints = model.get("pattern_hints", [])
     lines += ["", "## Pattern hints (suppressed from the main scanner feed)"]
     if hints:

@@ -395,15 +395,22 @@ def _decorator_findings(rel,text,stem):
 
 def _proxy_findings(rel,text,stem):
     if 'proxy' in stem.lower(): return []
-    remote=len(re.findall(r'(?i)\b(fetch|axios|requests\.|resttemplate|webclient|grpc|httpclient|client\.)',text))
-    concerns=[x for x in ('cache','retry','auth','authorize','token','timeout') if re.search(rf'(?i)\b{x}\w*\b',text)]
-    if remote>=2 and len(concerns)>=2:
-        pos=re.search(r'(?i)\b(fetch|axios|requests\.|resttemplate|webclient|grpc|httpclient|client\.)',text)
-        return [_finding('opportunity.proxy_remote_concerns','OPPORTUNITY','medium',
-            f"Remote access ({remote} call/marker occurrences) is mixed with {len(concerns)} access concerns ({', '.join(concerns)}). Proxy may centralize those controls behind a stable service interface.",
-            [f'{rel}:{_line(text,pos.start() if pos else 0)}'],smell='remote-access-cross-cutting-concerns',
-            guidance="Prefer the HTTP/RPC client's native middleware/interceptors first; add Proxy only when callers need a stable domain-facing interface around remote access.",
-            signals={'positive':[f'{remote} remote-access markers',f"cross-cutting concerns: {', '.join(concerns)}"],'negative':[]},scope='file')]
+    code=re.sub(r'/\*[\s\S]*?\*/|(?m:^\s*//[^\n]*)', '', text)
+    call_pattern=r'(?i)\bfetch\s*\(|\baxios\.(?:get|post|put|patch|delete)\s*\(|\b(?:this\.)?http\s*\.\s*(?:get|post|put|patch|delete)(?:<[^\n]{0,160}?>)?\s*\('
+    calls=list(re.finditer(call_pattern,code))
+    concerns=[x for x in ('cache','retry','auth','authorize','token','timeout') if re.search(rf'(?i)\b{x}\w*\b',code)]
+    if len(calls)>=2 and len(concerns)>=2:
+        native_client=bool(re.search(r'\bHttpClient\b',code))
+        status,confidence=('HINT','low') if native_client else ('OPPORTUNITY','medium')
+        reason=(f"{len(calls)} remote calls coexist with {len(concerns)} access concerns ({', '.join(concerns)}). "
+                + ("The framework HTTP client already offers interceptors; a separate Proxy is not established."
+                   if native_client else "A shared boundary may help if callers repeat this behavior."))
+        pos=text.find(calls[0].group(0))
+        return [_finding('opportunity.proxy_remote_concerns',status,confidence,
+            reason,[f'{rel}:{_line(text,max(pos,0))}'],smell='remote-access-cross-cutting-concerns',
+            guidance="Use native HTTP middleware/interceptors first; consider Proxy only when callers need a stable domain-facing interface around repeated remote access.",
+            signals={'positive':[f'{len(calls)} remote calls',f"access concerns: {', '.join(concerns)}"],
+                     'negative':['framework-native interception available'] if native_client else []},scope='file')]
     return []
 
 

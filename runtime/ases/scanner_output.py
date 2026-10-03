@@ -110,6 +110,8 @@ def _entity(item: dict) -> dict:
     return {"type":"project","id":"project","name":"project"}
 
 def _source_role(item: dict) -> str:
+    if item.get("source_role"):
+        return item["source_role"]
     loc=_location(item.get("evidence",[]))
     if loc and loc.get("path"):
         return classify_source(loc["path"])["role"]

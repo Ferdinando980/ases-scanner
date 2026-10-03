@@ -66,7 +66,7 @@ def iter_project_files(root: Path):
 def iter_owned_files(root: Path):
     """Runtime-analyzable project files only. Generated/vendor/tooling/docs never drive findings."""
     for p in iter_project_files(root):
-        role = classify_source(p.relative_to(root).as_posix())["role"]
+        role = classify_source(p.relative_to(root).as_posix(), root)["role"]
         if role in {"OWNED_SOURCE", "TEST"}:
             yield p
 
@@ -99,7 +99,7 @@ def scan_filesystem(root: Path) -> dict:
     for p in files:
         rel = p.relative_to(root).as_posix()
         ext = p.suffix.lower()
-        source = classify_source(rel)
+        source = classify_source(rel, root)
         if ext in CODE_EXTS and source["role"] in {"OWNED_SOURCE","TEST"}:
             langs[CODE_EXTS[ext]] += 1
             source_manifest.append({"path":rel,"sha256":sha256_file(p),"language":CODE_EXTS[ext],**source})
@@ -124,8 +124,8 @@ def scan_filesystem(root: Path) -> dict:
         if "migration" in low or "/db/migrate" in low or "/migrations/" in low:
             migrations.append(rel)
 
-    role_counts=Counter(classify_source(p.relative_to(root).as_posix())["role"] for p in files)
-    scope_counts=Counter(classify_source(p.relative_to(root).as_posix())["scope"] for p in files if classify_source(p.relative_to(root).as_posix())["role"] in {"OWNED_SOURCE","TEST"})
+    role_counts=Counter(classify_source(p.relative_to(root).as_posix(), root)["role"] for p in files)
+    scope_counts=Counter(classify_source(p.relative_to(root).as_posix(), root)["scope"] for p in files if classify_source(p.relative_to(root).as_posix(), root)["role"] in {"OWNED_SOURCE","TEST"})
     return {
         "root": str(root),
         "source_roles": dict(sorted(role_counts.items())),

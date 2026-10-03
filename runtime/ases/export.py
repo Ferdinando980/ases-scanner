@@ -14,7 +14,7 @@ def generic_context(model: dict, manifest: dict | None = None) -> dict:
     # reading this and ignore the new keys. `manifest` is optional because `ases export` can
     # run standalone on a semantic-model.yaml with no manifest.json alongside it (see cli.py);
     # project_fingerprint is then omitted rather than guessed.
-    return {
+    context = {
         "schema":"ases-consumer-context/1.5",
         "ases_version":model.get("ases_version"),
         "generated_at":datetime.now(timezone.utc).isoformat(),
@@ -29,6 +29,7 @@ def generic_context(model: dict, manifest: dict | None = None) -> dict:
         "assets":model.get("assets",[]),
         "frontend":model.get("frontend",{}),
         "trust_boundaries":model.get("trust_boundaries",[]),
+        "sensitive_paths":model.get("sensitive_paths",[]),
         "controls":model.get("controls",[]),
         "sessions":model.get("sessions",[]),
         "documentation_artifacts":model.get("documentation_artifacts",[]),
@@ -50,6 +51,9 @@ def generic_context(model: dict, manifest: dict | None = None) -> dict:
         "conflicts":model.get("conflicts",[]),
         "unknowns":model.get("unknowns",[]),
     }
+    if model.get("site_observations") is not None:
+        context["site_observations"] = model["site_observations"]
+    return context
 
 def export_json(model_path: Path, out: Path, manifest: dict | None = None):
     data = generic_context(load_model(model_path), manifest)

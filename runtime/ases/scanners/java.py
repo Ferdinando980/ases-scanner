@@ -66,6 +66,8 @@ def _classify_plain_type(name: str, pkg_name: str, rel: str, ann_names: list[str
         return "dto"
     if lname.endswith("dao") or ".dao" in lpkg or "/dao/" in rel.lower():
         return "repository"
+    if declared_kind == "interface" and (lname.endswith("repository") or ".repository" in lpkg or "/repository/" in rel.lower()):
+        return "repository"
     if lname.endswith("service") or lname.endswith("serviceimpl") or ".service" in lpkg or "/service/" in rel.lower():
         return "service"
     if lname.endswith("factory"):

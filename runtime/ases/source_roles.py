@@ -13,7 +13,7 @@ _BUILD_PARTS = {"target","build","dist","out",".next","coverage"}
 _DOC_ROOTS = {"docs","documentation","documentazione","projectdocs","project-docs"}
 
 
-def classify_source(path: str) -> dict:
+def classify_source(path: str, root: Path | None = None) -> dict:
     rel = path.replace("\\","/").lstrip("/")
     low = rel.lower()
     parts = tuple(p.lower() for p in Path(rel).parts)
@@ -36,6 +36,9 @@ def classify_source(path: str) -> dict:
         role = "OWNED_SOURCE"
 
     scope = _scope(rel, role, suffix)
+    if (root is not None and role in {"OWNED_SOURCE", "TEST"} and suffix in {".ts", ".js"}
+            and low.startswith("src/app/") and (root / "angular.json").is_file()):
+        scope = "frontend"
     return {"role": role, "scope": scope}
 
 

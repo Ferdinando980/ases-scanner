@@ -4,6 +4,7 @@ import re
 from .filesystem import iter_owned_files
 from .common import balanced_block, line_of
 from ..model import FactGraph, Node, Edge, Evidence
+from ..source_roles import classify_source
 
 TS_EXTS = {".ts",".tsx",".js",".jsx"}
 IMPORT_RE = re.compile(r'import\s+(?:type\s+)?(?:[^"\']+\s+from\s+)?["\']([^"\']+)["\']|require\(\s*["\']([^"\']+)["\']\s*\)')
@@ -11,7 +12,7 @@ CLASS_RE = re.compile(r'(?P<decs>(?:@\w+(?:\([^)]*\))?\s*)*)(?:export\s+)?(?:def
 INTERFACE_RE = re.compile(r'(?:export\s+)?interface\s+(?P<name>[A-Za-z_]\w*)')
 METHOD_RE = re.compile(r'(?P<decs>(?:@\w+(?:\([^)]*\))?\s*)*)(?:(?:public|private|protected|static|async|readonly)\s+)*(?P<name>[A-Za-z_]\w*)\s*\((?P<params>[^)]*)\)\s*(?::\s*(?P<ret>[^{=>\n]+))?')
 DEC_RE = re.compile(r'@([A-Za-z_]\w*)\s*(?:\(([^)]*)\))?')
-EXPRESS_RE = re.compile(r'(?P<obj>[A-Za-z_]\w*)\.(?P<method>get|post|put|patch|delete|options|head|all)\s*\(\s*["\'](?P<path>[^"\']+)["\']',re.I)
+EXPRESS_RE = re.compile(r'(?P<obj>app|router|server|[A-Za-z_]\w*Router)\.(?P<method>get|post|put|patch|delete|options|head|all)\s*\(\s*["\'](?P<path>[^"\']+)["\']',re.I)
 TEST_RE = re.compile(r'\b(?:it|test)\s*\(\s*["\']([^"\']+)["\']')
 PRISMA_RE = re.compile(r'\bprisma\.([A-Za-z_]\w*)\.([A-Za-z_]\w*)\s*\(')
 MONGOOSE_RE = re.compile(r'\bmongoose\.model\s*\(\s*["\']([^"\']+)["\']')
@@ -53,6 +54,12 @@ def scan_typescript(root: Path) -> FactGraph:
     for p in [p for p in iter_owned_files(root) if p.suffix.lower() in TS_EXTS]:
         rel=p.relative_to(root).as_posix()
         text=p.read_text(encoding="utf-8",errors="ignore")
+        if _is_test_path(rel):
+            for tm in TEST_RE.finditer(text):
+                graph.add_node(Node(f"test:{rel}:{line_of(text,tm.start())}","test",tm.group(1),rel,{"framework":"Jest/Vitest/Mocha-like"},Evidence(evidence=[f"{rel}:{line_of(text,tm.start())}"])))
+            continue
+        if classify_source(rel, root)["scope"] == "frontend":
+            continue
         texts[rel]=text
         imports=[m.group(1) or m.group(2) for m in IMPORT_RE.finditer(text)]
         file_imports[rel]=imports
@@ -93,11 +100,6 @@ def scan_typescript(root: Path) -> FactGraph:
         for mm in MONGOOSE_RE.finditer(text):
             name=mm.group(1)
             graph.add_node(Node(f"datastore:mongoose:{name}","entity",name,rel,{"orm":"Mongoose"},Evidence(evidence=[f"{rel}:{line_of(text,mm.start())}"])))
-
-        low=rel.lower()
-        if any(x in low for x in (".test.",".spec.","/test/","/tests/","__tests__")):
-            for tm in TEST_RE.finditer(text):
-                graph.add_node(Node(f"test:{rel}:{line_of(text,tm.start())}","test",tm.group(1),rel,{"framework":"Jest/Vitest/Mocha-like"},Evidence(evidence=[f"{rel}:{line_of(text,tm.start())}"])))
 
     for nid,name,rel,text,bstart,bend,decs in class_records:
         body=text[bstart:bend]

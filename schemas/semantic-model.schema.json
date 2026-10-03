@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ases.dev/schema/semantic-model-v1.7.json",
-  "title": "ASES Semantic Software Model v1.7",
+  "$id": "https://ases.dev/schema/semantic-model-v1.8.json",
+  "title": "ASES Semantic Software Model v1.8",
   "type": "object",
   "required": [
     "ases_version",
@@ -26,7 +26,8 @@
           "enum": [
             "GREENFIELD",
             "BROWNFIELD-DOCUMENTED",
-            "BROWNFIELD-UNDOCUMENTED"
+            "BROWNFIELD-UNDOCUMENTED",
+            "LIVE_SITE"
           ]
         },
         "languages": {
@@ -46,11 +47,16 @@
             "string",
             "null"
           ]
+        },
+        "source_mode": {
+          "enum": ["LIVE_SITE"]
         }
       }
     },
     "source_classification": {"type":"object"},
     "frontend": {"type":"object"},
+    "site_observations": {"type":["object","null"]},
+    "sensitive_paths": {"type":"array", "items":{"type":"object"}},
     "frontend_findings": {"type":"array"},
     "cross_boundary_findings": {"type":"array"},
     "evidence_states": {

@@ -46,6 +46,7 @@ La regola nasce da benchmark su repository reali: uno ha fatto emergere il rumor
 - pattern applicativi e di design separati per livello;
 - conformità ed erosione rispetto all'architettura prima osservata;
 - componenti frontend, layer di stato/API e contratti frontend ↔ backend;
+- osservazione limitata delle pagine HTML pubblicate, dei form e dei riferimenti agli script;
 - baseline, soppressioni e pulizia sicura degli output.
 
 ASES non impone un'architettura target e non trasforma ogni anomalia in una vulnerabilità. Esporta evidenze che strumenti di sicurezza, documentazione o manutenzione possono interpretare nel proprio contesto.
@@ -60,7 +61,10 @@ python -m pip install -e ".[test]"
 python -m pytest -q
 
 ases scan https://github.com/OWNER/REPOSITORY
+ases scan-site https://example.org --max-pages 5
 ```
+
+La modalità sito effettua solo richieste GET a pagine HTML pubbliche della stessa origine, rispetta `robots.txt` e non esegue JavaScript. `site-observations.json` documenta le pagine ricevute; la copertura dichiara non osservate architettura dei sorgenti e corrispondenza frontend/backend. Per quelle analisi serve la scansione del repository. Su sorgenti Angular ASES riconosce componenti, template e servizi `HttpClient` senza scambiare i test frontend per route backend.
 
 ```sh
 ases scan https://github.com/OWNER/REPOSITORY --baseline path/to/previous.ases
@@ -71,7 +75,7 @@ L'output principale comprende `semantic-model.yaml`, `fact-graph.json`, `consume
 
 ## Stato
 
-ASES è uno scanner indipendente in sviluppo attivo. La versione 1.7 ha aggiunto classificazione delle fonti e analisi frontend/cross-boundary. La validazione continua su altri repository reali, privilegiando la precisione rispetto al numero di finding. Zero opportunità speculative è un risultato valido.
+ASES è uno scanner indipendente in sviluppo attivo. La versione 1.8 aggiunge l'osservazione passiva dei siti pubblicati e migliora l'analisi dei sorgenti Angular. La validazione continua su altri repository reali, privilegiando la precisione rispetto al numero di finding. Zero opportunità speculative è un risultato valido.
 
 ## Licenza
 

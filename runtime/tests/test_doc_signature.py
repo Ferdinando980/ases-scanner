@@ -10,7 +10,7 @@ def test_signed_docs_carry_a_matching_fingerprint(tmp_path):
     out = tmp_path / "out"
     result = scan_project(fixture, out)
     fp = result["manifest"]["project_fingerprint"]
-    for name in ("SYSTEM-OVERVIEW.md", "RAD.md", "SDD.md", "ODD.md", "TESTING.md"):
+    for name in ("SUMMARY.md", "SYSTEM-OVERVIEW.md", "RAD.md", "SDD.md", "ODD.md", "TESTING.md"):
         text = (out / "docs" / name).read_text(encoding="utf-8")
         m = SIG_RE.match(text)
         assert m, f"{name}: missing or malformed ases:doc signature"

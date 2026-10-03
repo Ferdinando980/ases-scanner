@@ -72,6 +72,18 @@ Consumers should key history on `fingerprint`, not line number or display ID.
 
 A line-number-only move remains the same fingerprint and does not count as a semantic change.
 
+`ases semantic-diff <before.ases> <after.ases>` (also emitted by `scan --baseline` when the
+baseline contains `consumer-context.json`) writes `ases-semantic-diff/1.0`. It reports added,
+removed, and changed evidence-bearing entities by stable id/fingerprint across behaviors,
+components, interfaces, stores, external systems, boundaries, controls, sessions, sensitive paths, frontend
+findings, cross-boundary findings, and claims. Line-number-only evidence moves are ignored.
+This is an inventory delta, **not** a security verdict. A baseline consisting only of
+`scanner-findings.json` still produces only the original findings diff.
+
+`docs/SUMMARY.md` is a generated review aid, separate from RAD/SDD/ODD. Like the other signed
+documents, it belongs to a scan snapshot; its signature alone does not prove the current source
+tree still matches that snapshot.
+
 ## Two distinct epistemic vocabularies — do not conflate them
 
 ASES uses two separate state enums; a consumer that merges them into one "confidence level"
@@ -104,3 +116,11 @@ contradicts is what's in question) — collapsing the two into one scale loses t
 `source_classification` reports repository roles before inference. `GENERATED`, `VENDORED`, `TOOLING`, `DOCUMENTATION`, and `BUILD_ARTIFACT` files do not drive production design-pattern opportunities.
 
 `frontend` in consumer context contains recovered owned components, templates, API/service modules, stores, and literal API calls. `frontend_findings` and `cross_boundary_findings` use the same epistemic states/fingerprints as backend findings, so Lantern should ingest them through the same pipeline rather than a frontend-specific parser.
+
+For Angular source, `frontend.routes` contains route declarations as written in `*.routes.ts`; nested paths are not flattened into externally reachable URLs without more context.
+
+## Published-site input (ASES 1.8)
+
+`ases scan-site <url>` writes the same `ases-consumer-context/1.5` and `ases-scanner-findings/1.3` schemas. `project.entry_mode` and `project.source_mode` are `LIVE_SITE`. The additive `site_observations` object contains sampled public HTML pages, their titles and hashes, forms, referenced scripts, and framework hints. `frontend.pages` is an additive list of delivered pages; it is not source templates. `frontend_findings` contains an informational `site.published_frontend_surface` observation.
+
+Consumers must read `semantic_quality.analysis_coverage`: source structure, architecture, design patterns, frontend component structure and frontend/backend contracts are `NOT_OBSERVED` for a site scan. A `validation: PASS` checks output consistency, not site completeness or behavior. Live mode does not execute JavaScript, submit forms, fetch authenticated pages, or infer component architecture from compiled bundles.

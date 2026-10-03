@@ -1,12 +1,14 @@
 from __future__ import annotations
 import argparse, json, yaml, shutil
 from pathlib import Path
+from urllib.parse import urlsplit
 from .pipeline import scan_project, clean_output
 from .audit import audit_project
 from .selfcheck import selfcheck
 from .export import export_json
 from .repo_source import resolve_source
 from .diffing import load_findings, diff_findings
+from .semantic_diff import load_context, semantic_diff
 from . import __version__
 
 def build_parser():
@@ -20,6 +22,13 @@ def build_parser():
     scan.add_argument("--json", action="store_true")
     scan.add_argument("--baseline", help="Previous .ases directory or scanner-findings.json; writes findings-diff.json")
 
+    site = sub.add_parser("scan-site", help="Observe the published frontend of a public HTTP(S) site")
+    site.add_argument("url", help="Public website URL")
+    site.add_argument("--out", help="Output directory (default: <host>.site.ases)")
+    site.add_argument("--max-pages", type=int, default=5, help="Maximum same-origin HTML pages (1–10; default: 5)")
+    site.add_argument("--allow-local", action="store_true", help="Allow private/local addresses for a trusted test site")
+    site.add_argument("--json", action="store_true")
+
     inspect = sub.add_parser("inspect", help="Summarize a semantic model")
     inspect.add_argument("path")
 
@@ -32,6 +41,11 @@ def build_parser():
     diff.add_argument("before", help="Previous .ases directory or scanner-findings.json")
     diff.add_argument("after", help="Current .ases directory or scanner-findings.json")
     diff.add_argument("--out", help="Optional JSON output path")
+
+    semdiff = sub.add_parser("semantic-diff", help="Compare two ASES semantic snapshots")
+    semdiff.add_argument("before", help="Previous .ases directory or consumer-context.json")
+    semdiff.add_argument("after", help="Current .ases directory or consumer-context.json")
+    semdiff.add_argument("--out", help="Optional JSON output path")
 
     exp = sub.add_parser("export", help="Export generic consumer context")
     exp.add_argument("path", help="semantic-model.yaml or .ases directory")
@@ -51,6 +65,26 @@ def _default_remote_output(repo_name: str) -> Path:
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
+
+    if args.command == "scan-site":
+        from .site_source import scan_site
+        try:
+            name = (urlsplit(args.url).hostname or "site").replace(":", "-")
+            out = Path(args.out) if args.out else Path.cwd() / f"{name}.site.ases"
+            result = scan_site(args.url, out, max_pages=args.max_pages, allow_local=args.allow_local)
+            observations = result["semantic_model"]["site_observations"]
+            summary = {
+                "source": observations["source_uri"], "mode": "LIVE_SITE", "output": result["output"],
+                "pages": len(observations["pages"]),
+                "forms": sum(len(page["forms"]) for page in observations["pages"]),
+                "script_urls": len({script for page in observations["pages"] for script in page["scripts"]}),
+                "framework_hints": [hint["name"] for hint in observations["framework_hints"]],
+                "validation": result["validation"]["status"],
+            }
+            print(json.dumps(summary, indent=2) if args.json else "\n".join(f"{k}={v}" for k, v in summary.items()))
+            return 0
+        except (ValueError, RuntimeError) as exc:
+            raise SystemExit(str(exc)) from exc
 
     if args.command == "scan":
         source = None
@@ -73,6 +107,10 @@ def main(argv=None):
             if args.baseline:
                 finding_diff = diff_findings(load_findings(Path(args.baseline)), load_findings(Path(result["output"])))
                 (Path(result["output"]) / "findings-diff.json").write_text(json.dumps(finding_diff, indent=2), encoding="utf-8")
+                baseline_context = Path(args.baseline)
+                if baseline_context.is_dir() or baseline_context.name == "consumer-context.json":
+                    semantic_delta = semantic_diff(load_context(baseline_context), load_context(Path(result["output"])))
+                    (Path(result["output"]) / "semantic-diff.json").write_text(json.dumps(semantic_delta, indent=2), encoding="utf-8")
             summary = {
                 "source": source.display_source,
                 "remote": source.is_remote,
@@ -89,6 +127,11 @@ def main(argv=None):
                 "pattern_opportunities": len(model.get("pattern_opportunities",[])),
                 "pattern_hints": len(model.get("pattern_hints",[])),
                 "frontend_findings": len(model.get("frontend_findings",[])),
+                "frontend_components": len(model.get("frontend",{}).get("components",[])),
+                "frontend_templates": len(model.get("frontend",{}).get("templates",[])),
+                "frontend_services": len(model.get("frontend",{}).get("services",[])),
+                "frontend_api_calls": len(model.get("frontend",{}).get("api_calls",[])),
+                "frontend_route_declarations": len(model.get("frontend",{}).get("routes",[])),
                 "cross_boundary_findings": len(model.get("cross_boundary_findings",[])),
                 "source_roles": model.get("source_classification",{}).get("roles",{}),
                 "trace_links": len(model["trace_links"]),
@@ -125,6 +168,13 @@ def main(argv=None):
 
     if args.command == "diff":
         report = diff_findings(load_findings(Path(args.before)), load_findings(Path(args.after)))
+        if args.out:
+            Path(args.out).write_text(json.dumps(report, indent=2), encoding="utf-8")
+        print(json.dumps(report, indent=2))
+        return 0
+
+    if args.command == "semantic-diff":
+        report = semantic_diff(load_context(Path(args.before)), load_context(Path(args.after)))
         if args.out:
             Path(args.out).write_text(json.dumps(report, indent=2), encoding="utf-8")
         print(json.dumps(report, indent=2))

@@ -13,6 +13,8 @@ def build_manifest(inventory: dict, model: dict, graph: dict) -> dict:
             "controls":len(model.get("controls",[])),
         }
     }
+    if model.get("site_observations"):
+        stable["site_observations"] = model["site_observations"]
     raw=json.dumps(stable,sort_keys=True,separators=(",",":")).encode()
     return {
         "ases_version":model.get("ases_version"),

@@ -11,6 +11,7 @@ from .conformance import recover_architecture_conformance
 from .frontend import recover_frontend_findings, recover_cross_boundary_findings
 from ..suppression import load_suppressions, apply_suppressions
 from ..claims import build_claims
+from .paths import recover_sensitive_paths
 
 ARCH_KINDS = {
     "application","controller","service","repository","component","configuration",
@@ -40,6 +41,7 @@ def build_semantic_model(project_name: str, inventory: dict, graph: FactGraph, r
         "services":[_entity(n) for n in nodes_by_kind["frontend_service"]],
         "stores":[_entity(n) for n in nodes_by_kind["frontend_store"]],
         "api_calls":[{**_entity(n),"http_method":n.metadata.get("http_method"),"path":n.metadata.get("path"),"external":n.metadata.get("external",False)} for n in nodes_by_kind["frontend_api_call"]],
+        "routes":[{**_entity(n),"declared_path":n.metadata.get("declared_path"),"framework":n.metadata.get("framework")} for n in nodes_by_kind["frontend_route"]],
     }
 
     controls=[
@@ -123,6 +125,7 @@ def build_semantic_model(project_name: str, inventory: dict, graph: FactGraph, r
         "external_systems":recover_external_systems(graph),
         "assets":assets,
         "trust_boundaries":trust,
+        "sensitive_paths":recover_sensitive_paths(graph),
         "controls":controls,
         "sessions":sessions,
         "assumptions":assumptions,
@@ -164,6 +167,8 @@ def infer_frameworks(inventory,graph):
         out.append("NestJS (observed)")
     if any(n.metadata.get("framework")=="Express/Fastify-like" for n in graph.nodes):
         out.append("Express/Fastify-like routing (observed)")
+    if any(n.metadata.get("framework")=="Angular" for n in graph.nodes):
+        out.append("Angular (observed from frontend source)")
     if any(n.metadata.get("orm")=="Prisma" for n in graph.nodes):
         out.append("Prisma (observed)")
     if any(n.metadata.get("orm")=="Mongoose" for n in graph.nodes):

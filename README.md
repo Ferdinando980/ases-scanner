@@ -46,6 +46,7 @@ That rule came from testing against real repositories. One benchmark exposed noi
 - application and design patterns with explicit levels;
 - architecture conformance and erosion against the architecture ASES first observed;
 - frontend components, state/API layers and frontend ↔ backend contracts;
+- bounded observation of a published website's HTML pages, forms and script references;
 - baseline comparison, suppression and safe output cleanup.
 
 ASES does not impose a target architecture and does not treat every anomaly as a vulnerability. It exports evidence that a security, documentation or maintenance tool can interpret in its own context.
@@ -60,7 +61,10 @@ python -m pip install -e ".[test]"
 python -m pytest -q
 
 ases scan https://github.com/OWNER/REPOSITORY
+ases scan-site https://example.org --max-pages 5
 ```
+
+The site mode is passive: it fetches same-origin public HTML, respects `robots.txt`, and does not run JavaScript. Its `site-observations.json` records what was delivered; its coverage section marks source-level architecture and API contracts as unobserved. Scan the repository for those details. A source scan also recognises Angular components, component templates and `HttpClient` service modules without treating Angular tests as backend routes.
 
 Compare a later scan with a baseline:
 
@@ -73,7 +77,7 @@ The main output directory contains `semantic-model.yaml`, `fact-graph.json`, `co
 
 ## Status
 
-ASES is an independent, actively developed scanner. Version 1.7 added source-role classification and frontend/cross-boundary analysis. It is being validated against additional real repositories, with precision prioritised over a large finding count. Zero speculative opportunities is a valid result.
+ASES is an independent, actively developed scanner. Version 1.8 adds passive published-site observation and improves Angular source recovery. It is being validated against additional real repositories, with precision prioritised over a large finding count. Zero speculative opportunities is a valid result.
 
 ## License
 
